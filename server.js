@@ -6,26 +6,69 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
+// message template: User, message and time-stamp
+const messageTemplate = require("./forms/message.template");
+
+// Utilities for users and rooms
+const {
+  joiningUser,
+  addCurrentUser,
+  leavingUser,
+  usersInRoom,
+} = require("./forms/users");
+
 //// set static folder /////
 app.use(express.static("public"));
 
 io.on("connection", (socket) => {
-  console.log("first socket!");
+  socket.on("joinRoom", ({ username, room }) => {
+    const user = joiningUser(socket.id, username, room);
 
-  // welcomes the user logging in
-  socket.emit("message", "hej o välkommen till shatapp!");
+    socket.join(user.room);
 
-  // displays message for all other users besides the user joining
-  socket.broadcast.emit("message", "här är en broadcast till alla");
+    // welcomes the user logging in
+    socket.emit(
+      "message",
+      messageTemplate("ShatApp", "hej o välkommen till shatapp!")
+    );
+
+    // displays message for all other users besides the user joining
+    socket.broadcast
+      .to(user.room)
+      .emit(
+        "message",
+        messageTemplate("ShatApp", `${user.username} shat up the app`)
+      );
+
+    // Users in rooms
+    io.to(user.room).emit("usersInRoom", {
+      room: user.room,
+      users: usersInRoom(user.room),
+    });
+  });
 
   // Shows when a user leaves
   socket.on("disconnect", () => {
-    io.emit("message", "A user has left the shat");
+    const user = leavingUser(socket.id);
+
+    if (user) {
+      io.to(user.room).emit(
+        "message",
+        messageTemplate("ShatApp", `${user.username} had enough`)
+      );
+
+      // Users in rooms
+      io.to(user.room).emit("usersInRoom", {
+        room: user.room,
+        users: usersInRoom(user.room),
+      });
+    }
   });
 
   // Recieve messages from front-end
   socket.on("shatMessage", (shatMsg) => {
-    io.emit("shatMessage", shatMsg);
+    const user = addCurrentUser(socket.id);
+    io.to(user.room).emit("message", messageTemplate(user.username, shatMsg));
   });
 });
 
