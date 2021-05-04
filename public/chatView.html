@@ -5,12 +5,60 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@1,800&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
   <script src=https://kit.fontawesome.com/369fccfd9c.js crossorigin="anonymous"></script>
   <script  src="/socket.io/socket.io.js"></script>
   <script defer src="./script/client.js"></script>
   <title>ShatApp</title>
 </head>
 <body>
-  
+
+  <div class="chat-view-container">
+
+    <div class="sidebar">
+      <h3 class="logo">Shat<b>App</b></h3>
+      <div class="room">
+        <h4>Room</h4>
+        <span class="room-name">Bajamajan</span>
+      </div>
+      <div class="users">
+        <h4>Users</h4>
+        <span class="user">Bosse</span>
+        <span class="user">Kurt</span>
+        <span class="user">Bertil</span>
+        <span class="user">Conny</span>
+      </div>
+      <button class="leave">Leave Room</button>
+    </div>
+
+    <div class="chat-container">
+
+      <div class="chat">
+        <div class="user-message">
+          <div class="message-header">
+            <h5>Bosse</h5>
+            <div class="time">13:46</div>
+          </div>
+          <div class="message-body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit laborum quas similique.</div>
+        </div>
+      </div>
+
+      <div class="text-input">
+        <form id="message-form">
+          <input 
+            type="text"
+            id="message"
+            placeholder="Enter Message..."
+            required
+            autocomplete="off"
+          >
+          <button class="button" type="submit">Send</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
 </body>
 </html>
