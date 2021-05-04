@@ -11,6 +11,13 @@ const io = socketio(server);
 //// set static folder /////
 app.use(express.static('public'));
 
+io.on('connection', (socket) => {
+    console.log('first socket!')
+
+    socket.emit('message', 'hej o välkommen till shatapp!');
+
+    socket.broadcast.emit('message', 'här är en broadcast till alla')
+})
 
 
 /// connection with server ///////
