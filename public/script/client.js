@@ -31,7 +31,7 @@ function renderMessage(message) {
     <p class="time">13:46</p>
     </div>
     <p class="message-body">
-    ${message}hejhejhejhejhe
+    ${message}
     </p>`;
     document.querySelector('.chat').appendChild(div);
 }
