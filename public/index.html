@@ -4,13 +4,59 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./style/style.css">
   <script src=https://kit.fontawesome.com/369fccfd9c.js crossorigin="anonymous"></script>
   <script  src="/socket.io/socket.io.js"></script>
   <script defer src="./script/client.js"></script>
   <title>ShatApp</title>
 </head>
 <body>
+  <div class="container glass-design-main">
+      <form action="chatView.html">
+        <div class="form-control">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Enter username..."
+            required
+          />
+        </div>
+        <div class="form-control">
+          <div class="create-room">
+            <input
+            type="text"
+            name="room-name"
+            id="room-name"
+            placeholder="Enter room name..."
+            required
+          />
+            <input
+            type="text"
+            name="room-password"
+            id="room-password"
+            placeholder="Enter password..."
+          
+          />
+          </div>
+        </div>
+        <div class="form-control">
+          <!-- Form kontrollen -->
+          <div class="chat-room">
+            <label for="chat-room">Active rooms</label>
+            <select name="chat-room" id="chat-room">
+							<option value="Toan">Toan</option>
+							<option value="Dasset">Dasset</option>
+							<option value="Bajamajan">Bajamajan</option>
+							<option value="WC">WC</option>
+				
+						</select>
+          </div>
+        </div>
+        <button type="submit" class="btn">Join Chat</button>
+      </form>
+  </div>
   
 </body>
 </html>
