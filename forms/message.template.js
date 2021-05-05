@@ -4,7 +4,7 @@ function messageTemplate(username, text) {
   return {
     username,
     text,
-    time: moment().format("hh:mm"),
+    time: moment().format("HH:mm"),
   };
 }
 
