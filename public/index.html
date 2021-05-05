@@ -14,27 +14,35 @@
   <script defer src="./script/rooms.js"></script>
   <title>ShatApp</title>
 </head>
-<body>
+<body class="start-page-body">
+
   <div class="container glass-design-main">
-      <form action="chatView.html">
-        <div class="form-control">
-          <label for="username">Username</label>
-          <input
-            type="text"
-            name="username"
-            id="username"
-            placeholder="Enter username..."
-            required
-          />
-        </div>
-        <div class="form-control">
-          <div class="create-room">
+    <h1 class="logo">Shat<b>App</b></h1>
+    <form action="chatView.html">
+      <div class="form-control username-input">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          placeholder="Enter username..."
+          required
+        />
+      </div>
+      <div class="form-control">
+        <h2>Create Room</h2>
+        <div class="create-room">
+          <div class="room-name-input">
+            <label for="room">Room Name</label>
             <input
               type="text"
               name="room"
               id="room-name"
               placeholder="Enter room name..."
             />
+          </div>
+          <div class="room-password-input">
+            <label for="room-password">Password (optional)</label>
             <input
               type="text"
               name="room-password"
@@ -42,23 +50,23 @@
               placeholder="Enter password..."
             />
           </div>
-          <button type="button" id="create-room-btn">Create Room</button>
         </div>
-        <div class="form-control">
-          <!-- Form kontrollen -->
-          <div class="chat-room">
-            <label for="chat-room">Active rooms</label>
-            <select name="chat-room" id="chat-room">
-							<option value="Toan">Toan</option>
-							<option value="Dasset">Dasset</option>
-							<option value="Bajamajan">Bajamajan</option>
-							<option value="WC">WC</option>
-				
-						</select>
-          </div>
+        <button type="button" id="create-room-btn" class="create-room-btn btn">Create Room</button>
+      </div>
+      <div class="form-control">
+        <!-- Form kontrollen -->
+        <div class="chat-room">
+          <label for="chat-room">Active rooms</label>
+          <select name="chat-room" id="chat-room">
+            <option value="Toan">Toan</option>
+            <option value="Dasset">Dasset</option>
+            <option value="Bajamajan">Bajamajan</option>
+            <option value="WC">WC</option>
+          </select>
         </div>
-        <button type="submit" class="btn">Join Chat</button>
-      </form>
+      </div>
+      <button type="submit" class="btn create-room-btn">Join Chat</button>
+    </form>
   </div>
   
 </body>
