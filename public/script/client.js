@@ -56,29 +56,16 @@ shatForm.addEventListener("submit", (e) => {
   e.target.elements.messagewritten.focus();
 });
 
-// Rendering messages from the server as content on the chat
-// Tried adding it in to the socket.on("shatMessage") instead
-//
-// function renderMessage(message) {
-//   console.log("render message");
-//   const div = document.createElement("div");
-//   div.classList.add("user-message");
-//   div.innerHTML = `<div class="message-header">
-//     <h5>Bosse</h5>
-//     <p class="time">13:46</p>
-//     </div>
-//     <p class="message-body">
-//     ${message}
-//     </p>`;
-//   document.querySelector(".chat").appendChild(div);
-// }
-
 // Show roomname
 function showRoomName(room) {
-  console.log('kör showRoomName funktionen')
-  roomName.innerText = room;
-  console.log('room är: ', room)
-  console.log('roomName är: ', roomName.innerText)
+  console.log("kör showRoomName funktionen");
+  if (room == "") {
+    roomName.innerText = "Lobby (default)";
+  } else {
+    roomName.innerText = room;
+  }
+  console.log("room är: ", room);
+  console.log("roomName är: ", roomName.innerText);
 }
 
 // Show all users in channel
