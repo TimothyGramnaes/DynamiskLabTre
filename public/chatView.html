@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+
+  <link rel="stylesheet" href="style/style.css">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@1,800&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
   <script src=https://kit.fontawesome.com/369fccfd9c.js crossorigin="anonymous"></script>
@@ -20,14 +21,11 @@
       <h3 class="logo">Shat<b>App</b></h3>
       <div class="room">
         <h4>Room</h4>
-        <span class="room-name">Bajamajan</span>
+        <p class="room-name" id="output-room-name"></p>
       </div>
       <div class="users">
         <h4>Users</h4>
-        <span class="user">Bosse</span>
-        <span class="user">Kurt</span>
-        <span class="user">Bertil</span>
-        <span class="user">Conny</span>
+        <ul id="users"></ul>
       </div>
       <button class="leave">Leave Room</button>
     </div>
@@ -40,19 +38,17 @@
             <h5>Bosse</h5>
             <p class="time">13:46</p>
           </div>
-        
-            <p class="message-body">
+          <p class="message-body">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit laborum quas similique.
           </p>             
         </div>
-        
       </div>
 
       <div class="text-input">
         <form id="message-form">
           <input 
             type="text"
-            id="message"
+            id="messagewritten"
             placeholder="Enter Message..."
             required
             autocomplete="off"
@@ -63,6 +59,11 @@
 
     </div>
   </div>
-
+  
+  <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.10.1/qs.min.js"
+      integrity="sha512-aTKlYRb1QfU1jlF3k+aS4AqTpnTXci4R79mkdie/bp6Xm51O5O3ESAYhvg6zoicj/PD6VYY0XrYwsWLcvGiKZQ=="
+      crossorigin="anonymous"
+    ></script>
 </body>
 </html>

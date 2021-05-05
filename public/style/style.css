@@ -1,5 +1,7 @@
 body {
   margin: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
 
 .glass-design-main {
@@ -26,4 +28,24 @@ body {
   align-items: center;
   justify-content: center;
   height: 35rem;
+}
+
+.sidebar {
+  background: aliceblue;
+  padding: 2rem;
+}
+
+.chat-container {
+  background: lightgoldenrodyellow;
+  padding: 2rem;
+}
+
+.chat-view-container {
+  display: flex;
+}
+
+.user-message {
+  border: 1px solid black;
+  margin-bottom: 1rem;
+  padding: 1rem;
 }
