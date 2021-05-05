@@ -1,3 +1,7 @@
+html, body {
+  overflow: hidden;
+}
+
 body {
   margin: 0;
   box-sizing: border-box;
@@ -38,6 +42,8 @@ body {
 .chat-container {
   background: lightgoldenrodyellow;
   padding: 2rem;
+  overflow-y: scroll;
+  max-height: 90vh;
 }
 
 .chat-view-container {
