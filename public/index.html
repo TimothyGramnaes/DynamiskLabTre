@@ -11,7 +11,7 @@
   
   <script src=https://kit.fontawesome.com/369fccfd9c.js crossorigin="anonymous"></script>
   <script  src="/socket.io/socket.io.js"></script>
-  <script defer src="./script/client.js"></script>
+  <script defer src="./script/rooms.js"></script>
   <title>ShatApp</title>
 </head>
 <body>
@@ -30,19 +30,19 @@
         <div class="form-control">
           <div class="create-room">
             <input
-            type="text"
-            name="room"
-            id="room-name"
-            placeholder="Enter room name..."
-          />
+              type="text"
+              name="room"
+              id="room-name"
+              placeholder="Enter room name..."
+            />
             <input
-            type="text"
-            name="room-password"
-            id="room-password"
-            placeholder="Enter password..."
-          
-          />
+              type="text"
+              name="room-password"
+              id="room-password"
+              placeholder="Enter password..."
+            />
           </div>
+          <button type="button" id="create-room-btn">Create Room</button>
         </div>
         <div class="form-control">
           <!-- Form kontrollen -->
