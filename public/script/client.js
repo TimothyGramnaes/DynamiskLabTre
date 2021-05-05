@@ -2,7 +2,7 @@ const shatForm = document.getElementById("message-form");
 const shatContainer = document.querySelector(".chat");
 
 // const roomName = document.querySelector(".room-name");
-const roomName = document.getElementById("roomname");
+const roomName = document.getElementById("output-room-name");
 const userList = document.getElementById("users");
 
 // Uses query-string to get the user and the room
@@ -75,7 +75,10 @@ shatForm.addEventListener("submit", (e) => {
 
 // Show roomname
 function showRoomName(room) {
-  roomName.innerHTML = room;
+  console.log('kör showRoomName funktionen')
+  roomName.innerText = room;
+  console.log('room är: ', room)
+  console.log('roomName är: ', roomName.innerText)
 }
 
 // Show all users in channel
