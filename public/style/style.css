@@ -21,8 +21,6 @@ body {
 }
 
 .container {
-  background-color: blue;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -30,9 +28,39 @@ body {
   height: 35rem;
 }
 
+.container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-room {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
 .sidebar {
   background: aliceblue;
   padding: 2rem;
+}
+
+.create-room {
+  display: flex;
+  margin-bottom: 2rem;
+}
+
+.create-room .input {
+  display: flex;
+  flex-direction: column;
+}
+
+.username-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-room {
+  margin-bottom: 1rem;
 }
 
 .chat-container {

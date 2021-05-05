@@ -43,6 +43,8 @@ socket.on("usersInRoom", ({ room, users }) => {
   showUsers(users);
 });
 
+socket.on('rooms-update', handleRoomsUpdate)
+
 shatForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -75,14 +77,16 @@ shatForm.addEventListener("submit", (e) => {
 
 // Show roomname
 function showRoomName(room) {
-  console.log('kör showRoomName funktionen')
   roomName.innerText = room;
-  console.log('room är: ', room)
-  console.log('roomName är: ', roomName.innerText)
 }
 
 // Show all users in channel
 function showUsers(users) {
   userList.innerHTML = `
     ${users.map((user) => `<li>${user.username}</li>`).join("")}`;
+}
+
+function handleRoomsUpdate() {
+  console.log('handleRoomsUpdate säger hej')
+  // uppdatera select listan
 }
