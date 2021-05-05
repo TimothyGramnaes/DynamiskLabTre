@@ -24,9 +24,16 @@ body {
   );
 }
 
+.logo {
+  font-family: 'Merriweather Sans';
+}
+
+.sidebar .logo {
+  font-size: 1.5rem;
+}
+
 .container {
   background-color: blue;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,6 +44,7 @@ body {
 .sidebar {
   background: aliceblue;
   padding: 2rem;
+  width: 20%;
 }
 
 .chat-container {
@@ -44,10 +52,13 @@ body {
   padding: 2rem;
   overflow-y: scroll;
   max-height: 90vh;
+  width: 80%;
 }
 
 .chat-view-container {
   display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .user-message {
