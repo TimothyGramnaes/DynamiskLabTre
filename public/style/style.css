@@ -55,6 +55,21 @@ body {
   width: 80%;
 }
 
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: lightgray;
+  background-clip: content-box;
+  border: 5px solid transparent;
+}
+
 .chat-view-container {
   display: flex;
   justify-content: space-between;
