@@ -1,7 +1,8 @@
 const shatForm = document.getElementById("message-form");
 const shatContainer = document.querySelector(".chat");
 
-const roomName = document.querySelector(".room-name");
+// const roomName = document.querySelector(".room-name");
+const roomName = document.getElementById("roomname");
 const userList = document.getElementById("users");
 
 // Uses query-string to get the user and the room
@@ -18,7 +19,7 @@ socket.emit("joinRoom", { username, room });
 
 // Recieved messages from the server for render
 socket.on("message", function (message) {
-  //console.log(message);
+  // Renders message to DOM
   const div = document.createElement("div");
   div.classList.add("user-message");
   div.innerHTML = `<div class="message-header">
@@ -32,6 +33,8 @@ socket.on("message", function (message) {
 
   // scroll down upon writing messages
   window.scrollTo(0, document.body.scrollHeight);
+
+  console.log(roomName);
 });
 
 // What Room and what users
@@ -72,7 +75,7 @@ shatForm.addEventListener("submit", (e) => {
 
 // Show roomname
 function showRoomName(room) {
-  roomName.innerText = room;
+  roomName.innerHTML = room;
 }
 
 // Show all users in channel
