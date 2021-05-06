@@ -43,7 +43,7 @@ socket.on("usersInRoom", ({ room, users }) => {
   showUsers(users);
 });
 
-socket.on('rooms-update', handleRoomsUpdate)
+socket.on("rooms-update", handleRoomsUpdate);
 
 shatForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -58,26 +58,16 @@ shatForm.addEventListener("submit", (e) => {
   e.target.elements.messagewritten.focus();
 });
 
-// Rendering messages from the server as content on the chat
-// Tried adding it in to the socket.on("shatMessage") instead
-//
-// function renderMessage(message) {
-//   console.log("render message");
-//   const div = document.createElement("div");
-//   div.classList.add("user-message");
-//   div.innerHTML = `<div class="message-header">
-//     <h5>Bosse</h5>
-//     <p class="time">13:46</p>
-//     </div>
-//     <p class="message-body">
-//     ${message}
-//     </p>`;
-//   document.querySelector(".chat").appendChild(div);
-// }
-
 // Show roomname
 function showRoomName(room) {
-  roomName.innerText = room;
+  console.log("kör showRoomName funktionen");
+  if (room == "") {
+    roomName.innerText = "Lobby (default)";
+  } else {
+    roomName.innerText = room;
+  }
+  console.log("room är: ", room);
+  console.log("roomName är: ", roomName.innerText);
 }
 
 // Show all users in channel
@@ -87,6 +77,13 @@ function showUsers(users) {
 }
 
 function handleRoomsUpdate() {
-  console.log('handleRoomsUpdate säger hej')
+  console.log("handleRoomsUpdate säger hej");
   // uppdatera select listan
 }
+
+// Check if there is users in a channel
+function channelIsEmpty(users) {
+  return document.getElementById(users).innerHTML.trim() == "";
+}
+// If true there is users in channel
+console.log(channelIsEmpty("users"));
