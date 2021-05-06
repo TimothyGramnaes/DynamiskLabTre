@@ -1,3 +1,7 @@
+html, body {
+  overflow: hidden;
+}
+
 body {
   margin: 0;
   box-sizing: border-box;
@@ -10,7 +14,7 @@ body {
     rgba(255, 255, 255, 0.4),
     rgba(255, 255, 255, 0.1)
   );
-  backdrop-filter: blur(2rem);
+  backdrop-filter: blur(1rem);
 }
 .glass-design-card {
   background: linear-gradient(
@@ -20,28 +24,146 @@ body {
   );
 }
 
-.container {
-  background-color: blue;
+.logo {
+  font-family: 'Merriweather Sans';
+}
 
+.logo b {
+  color: rgb(51, 51, 51);
+}
+
+.sidebar .logo {
+  font-size: 1.5rem;
+}
+
+.start-page-body {
+  background-image: url('../images/bg-1.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-position-y: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 35rem;
+  height: 34rem;
+  width: fit-content;
+  padding: 0 3rem;
+  border-radius: 20px;
+}
+
+.username-input, .room-password-input, .room-name-input {
+  display: flex;
+  flex-direction: column;
+}
+
+form input {
+  font-family: 'Poppins';
+  padding: .75rem .5rem;
+  border: none;
+  border-radius: 8px;
+}
+
+form label {
+  font-size: .9rem;
+  margin-left: .25rem;
+  margin-bottom: .25rem;
+  color: black;
+}
+
+.form-control h2 {
+  margin: 1.5rem auto .5rem auto;
+}
+
+.room-password-input, .room-name-input {
+  width: 48%;
+}
+
+.create-room {
+  display: flex;
+  margin: 0 0 1rem 0;
+  justify-content: space-between;
+}
+
+.btn {
+  width: 100%;
+  margin: 0 auto;
+  background: rgb(89, 184, 89);
+  color: white;
+  font-family: 'Poppins';
+  border: none;
+  border-radius: 8px;
+  padding: .75rem 0;
+  margin: 0 auto;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.create-room-btn {
+  margin: 0 auto;
+}
+
+.form-control {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.chat-room {
+  display: flex;
+  flex-direction: column;
+  margin: 1.5rem 0 1rem 0;
+}
+
+.chat-room select {
+  font-family: 'Poppins';
+  padding: .75rem .5rem;
+  border: none;
+  border-radius: 8px;
 }
 
 .sidebar {
   background: aliceblue;
   padding: 2rem;
+  width: 20%;
 }
 
 .chat-container {
   background: lightgoldenrodyellow;
   padding: 2rem;
+  overflow-y: scroll;
+  max-height: 90vh;
+  width: 80%;
+}
+
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: lightgray;
+  background-clip: content-box;
+  border: 5px solid transparent;
 }
 
 .chat-view-container {
   display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .user-message {
