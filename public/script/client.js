@@ -1,5 +1,9 @@
 const shatForm = document.getElementById("message-form");
 const shatContainer = document.querySelector(".chat-container");
+const roomNameInput = document.getElementById('room-name')
+const usernameInput = document.getElementById('username')
+const joinChatBtn = document.getElementById('join-chat-btn')
+
 
 // const roomName = document.querySelector(".room-name");
 const roomName = document.getElementById("output-room-name");
@@ -14,8 +18,65 @@ const { username, room } = Qs.parse(window.location.search, {
 
 const socket = io();
 
-// Joining shat
+window.onload = function() {
+  setupListerners()
+}
+
+function setupListerners() {
+  socket.on('joined-room', onJoinRoom)
+  socket.on('rooms-update', onRoomsUpdate)
+  // socket.on('', functionName)
+  // socket.on('', functionName)
+  console.log('setupListeners säger hej')
+
+  joinChatBtn.addEventListener('click', (e) => {
+    e.preventDefault()
+    console.log('show chat ui')
+
+    const container = document.querySelector('.container')
+    const chatViewContainer = document.querySelector('.chat-view-container')
+    const body = document.querySelector('body')
+
+    container.classList.add('hidden')
+    chatViewContainer.classList.remove('hidden')
+    body.classList.remove('start-page-body')
+  })
+}
+
+function onJoinRoom() {
+  console.log('onJoinRoom säger hej')
+  const nameABC = usernameInput.value
+  const roomNameABC = roomNameInput.value
+  console.log(nameABC, roomNameABC)
+}
+
+function onRoomsUpdate(rooms) {
+  console.log('onRoomsUpdate säger hej')
+  /*
+  const container = **document.get container for rooms list**
+  const items = []
+
+  for (const roomName of rooms) {
+    const item = document.createElement('div')
+    items.push(item)
+    item.innerText = roomName
+    item.classList.add('item')
+    if (room === roomName) {
+      item.classList.add('active')
+    }
+  }
+
+  container.innerHTML = null
+  container.append(...items)
+  */
+}
+
 socket.emit("joinRoom", { username, room });
+// Joining shat
+
+socket.on('rooms-update', (rooms) => {
+  console.log(rooms)
+})
 
 // Recieved messages from the server for render
 socket.on("message", function (message) {
@@ -34,7 +95,6 @@ socket.on("message", function (message) {
   // scroll down upon writing messages
   shatContainer.scrollTo(0, document.body.scrollHeight);
 
-  console.log(roomName);
 });
 
 // What Room and what users
@@ -58,14 +118,11 @@ shatForm.addEventListener("submit", (e) => {
 
 // Show roomname
 function showRoomName(room) {
-  console.log("kör showRoomName funktionen");
   if (room == "") {
     roomName.innerText = "Lobby (default)";
   } else {
     roomName.innerText = room;
   }
-  console.log("room är: ", room);
-  console.log("roomName är: ", roomName.innerText);
 }
 
 // Show all users in channel
