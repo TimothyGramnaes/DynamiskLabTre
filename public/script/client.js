@@ -1,5 +1,5 @@
 const shatForm = document.getElementById("message-form");
-const shatContainer = document.querySelector(".chat");
+const shatContainer = document.querySelector(".chat-container");
 
 // const roomName = document.querySelector(".room-name");
 const roomName = document.getElementById("output-room-name");
@@ -32,7 +32,7 @@ socket.on("message", function (message) {
   document.querySelector(".chat").appendChild(div);
 
   // scroll down upon writing messages
-  window.scrollTo(0, document.body.scrollHeight);
+  shatContainer.scrollTo(0, document.body.scrollHeight);
 
   console.log(roomName);
 });
