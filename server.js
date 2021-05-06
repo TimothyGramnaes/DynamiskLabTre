@@ -1,6 +1,7 @@
 const express = require("express");
 const http = require("http");
 const socketio = require("socket.io");
+const fs = require("fs");
 
 const app = express();
 const server = http.createServer(app);
@@ -26,11 +27,21 @@ io.on("connection", (socket) => {
 
     socket.join(user.room);
 
+    // socket.adapter.rooms
+
     // welcomes the user logging in
-    socket.emit("message", messageTemplate("ShatApp", "hej o välkommen till shatapp!"));
+    socket.emit(
+      "message",
+      messageTemplate("ShatApp", "hej o välkommen till shatapp!")
+    );
 
     // displays message for all other users besides the user joining
-    socket.broadcast.to(user.room).emit("message", messageTemplate("ShatApp", `${user.username} shat up the app`));
+    socket.broadcast
+      .to(user.room)
+      .emit(
+        "message",
+        messageTemplate("ShatApp", `${user.username} shat up the app`)
+      );
 
     // Users in rooms
     io.to(user.room).emit("usersInRoom", {
@@ -38,7 +49,7 @@ io.on("connection", (socket) => {
       users: usersInRoom(user.room),
     });
 
-    io.emit('rooms-update', getRooms())
+    io.emit("rooms-update", getRooms());
   });
 
   // Shows when a user leaves
@@ -46,7 +57,10 @@ io.on("connection", (socket) => {
     const user = leavingUser(socket.id);
 
     if (user) {
-      io.to(user.room).emit("message", messageTemplate("ShatApp", `${user.username} had enough`));
+      io.to(user.room).emit(
+        "message",
+        messageTemplate("ShatApp", `${user.username} had enough`)
+      );
 
       // Users in rooms
       io.to(user.room).emit("usersInRoom", {
@@ -55,7 +69,7 @@ io.on("connection", (socket) => {
       });
     }
 
-    io.emit('rooms-update', getRooms())
+    io.emit("rooms-update", getRooms());
   });
 
   // Recieve messages from front-end
@@ -66,14 +80,16 @@ io.on("connection", (socket) => {
 });
 
 function getRooms() {
-  const sockets = Object.values(io.sockets.sockets)
-  let rooms = []
+  const sockets = Object.values(io.sockets.sockets);
+  let rooms = [];
   for (const socket of sockets) {
-    const existingRooms = Object.keys(socket.room).filter(room => room !== socket.id)
-    rooms.push(...existingRooms)
-    console.log(existingRooms)
+    const existingRooms = Object.keys(socket.room).filter(
+      (room) => room !== socket.id
+    );
+    rooms.push(...existingRooms);
+    console.log(existingRooms);
   }
-  return [...new Set(rooms)]
+  return [...new Set(rooms)];
 }
 
 /// connection with server ///////
