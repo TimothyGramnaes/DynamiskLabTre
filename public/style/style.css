@@ -1,11 +1,12 @@
-html, body {
+html,
+body {
   overflow: hidden;
 }
 
 body {
   margin: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .glass-design-main {
@@ -25,7 +26,7 @@ body {
 }
 
 .logo {
-  font-family: 'Merriweather Sans';
+  font-family: "Merriweather Sans";
 }
 
 .logo b {
@@ -37,7 +38,7 @@ body {
 }
 
 .start-page-body {
-  background-image: url('../images/bg-1.jpg');
+  background-image: url("../images/bg-1.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -59,30 +60,33 @@ body {
   border-radius: 20px;
 }
 
-.username-input, .room-password-input, .room-name-input {
+.username-input,
+.room-password-input,
+.room-name-input {
   display: flex;
   flex-direction: column;
 }
 
 form input {
-  font-family: 'Poppins';
-  padding: .75rem .5rem;
+  font-family: "Poppins";
+  padding: 0.75rem 0.5rem;
   border: none;
   border-radius: 8px;
 }
 
 form label {
-  font-size: .9rem;
-  margin-left: .25rem;
-  margin-bottom: .25rem;
+  font-size: 0.9rem;
+  margin-left: 0.25rem;
+  margin-bottom: 0.25rem;
   color: black;
 }
 
 .form-control h2 {
-  margin: 1.5rem auto .5rem auto;
+  margin: 1.5rem auto 0.5rem auto;
 }
 
-.room-password-input, .room-name-input {
+.room-password-input,
+.room-name-input {
   width: 48%;
 }
 
@@ -97,10 +101,10 @@ form label {
   margin: 0 auto;
   background: rgb(89, 184, 89);
   color: white;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   border: none;
   border-radius: 8px;
-  padding: .75rem 0;
+  padding: 0.75rem 0;
   margin: 0 auto;
   font-weight: 700;
   text-transform: uppercase;
@@ -125,8 +129,8 @@ form label {
 }
 
 .chat-room select {
-  font-family: 'Poppins';
-  padding: .75rem .5rem;
+  font-family: "Poppins";
+  padding: 0.75rem 0.5rem;
   border: none;
   border-radius: 8px;
 }
@@ -170,4 +174,13 @@ form label {
   border: 1px solid black;
   margin-bottom: 1rem;
   padding: 1rem;
+}
+.toggleChat {
+  display: none;
+}
+.toggleLoginForm {
+  display: flex;
+}
+.hidden {
+  display: none;
 }

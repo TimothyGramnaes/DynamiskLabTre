@@ -26,9 +26,7 @@ io.on("connection", (socket) => {
   socket.on("joinRoom", ({ username, room }) => {
     const user = joiningUser(socket.id, username, room);
     console.log("join-room says hey");
-
     socket.join(user.room);
-
     const socketRoomsSetValues = socket.rooms.values();
 
     const roomNameValueFromSet =
