@@ -37,16 +37,14 @@ io.on("connection", (socket) => {
     // console.log(socketRoomsSetValues.next().value); // loggar ut socket.id
     // console.log(socketRoomsSetValues.next().value); // loggar ut roomname
 
+    io.emit("activeRooms", roomNameValueFromSet);
+
     console.log(
       "Current room name is:",
       roomNameValueFromSet,
       "and socket id is:",
       socket.id
     );
-
-    io.on("activeRooms", (data) => {
-      console.log(data);
-    });
 
     // welcomes the user logging in
     socket.emit(

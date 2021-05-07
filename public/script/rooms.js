@@ -2,9 +2,7 @@ const createRoomBtn = document.getElementById("create-room-btn");
 const roomDropdown = document.getElementById("chat-room");
 const newRoom = document.getElementById("room-name");
 
-const socket = io();
-
-const activeRooms = [];
+// const socket = io();
 
 createRoomBtn.addEventListener("click", () => {
   const newRoomName = newRoom.value;
@@ -15,10 +13,10 @@ createRoomBtn.addEventListener("click", () => {
   optionElement.innerText = newRoomName;
   // console.log("New room created:", newRoomName);
 
-  activeRooms.push(newRoomName);
-  showActiveRooms();
+  // activeRooms.push(newRoomName);
+  // showActiveRooms();
 
-  socket.emit("activeRooms", activeRooms);
+  // socket.emit("activeRooms", activeRooms);
   // return newRoomName;
 });
 
