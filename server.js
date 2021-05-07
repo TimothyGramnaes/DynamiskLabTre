@@ -21,10 +21,28 @@ const {
 app.use(express.static("public"));
 
 io.on("connection", (socket) => {
+  console.log("connected - ", socket.id);
+
   socket.on("joinRoom", ({ username, room }) => {
     const user = joiningUser(socket.id, username, room);
-    console.log(socket.id);
+    console.log("join-room says hey");
+
     socket.join(user.room);
+
+    const socketRoomsSetValues = socket.rooms.values();
+
+    const roomNameValueFromSet =
+      (socketRoomsSetValues.next().value, socketRoomsSetValues.next().value);
+
+    // console.log(socketRoomsSetValues.next().value); // loggar ut socket.id
+    // console.log(socketRoomsSetValues.next().value); // loggar ut roomname
+
+    console.log(
+      "Current room name is:",
+      roomNameValueFromSet,
+      "and socket id is:",
+      socket.id
+    );
 
     io.on("activeRooms", (data) => {
       console.log(data);
@@ -53,6 +71,8 @@ io.on("connection", (socket) => {
 
   // Shows when a user leaves
   socket.on("disconnect", () => {
+    console.log("disconnect - ", socket.id);
+
     const user = leavingUser(socket.id);
 
     if (user) {
