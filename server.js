@@ -4,7 +4,7 @@ const socketio = require("socket.io");
 
 const app = express();
 const server = http.createServer(app);
-const io = socketio(server);
+const io = socketio(server, { pingTimeout: 25000 });
 
 // message template: User, message and time-stamp
 const messageTemplate = require("./forms/message.template");
@@ -23,8 +23,12 @@ app.use(express.static("public"));
 io.on("connection", (socket) => {
   socket.on("joinRoom", ({ username, room }) => {
     const user = joiningUser(socket.id, username, room);
-
+    console.log(socket.id);
     socket.join(user.room);
+
+    io.on("activeRooms", (data) => {
+      console.log(data);
+    });
 
     // welcomes the user logging in
     socket.emit(

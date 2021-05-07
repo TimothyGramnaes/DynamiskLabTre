@@ -60,7 +60,7 @@ shatForm.addEventListener("submit", (e) => {
 function showRoomName(room) {
   console.log("kör showRoomName funktionen");
   if (room == "") {
-    roomName.innerText = "Lobby (default)";
+    roomName.innerText = "Lobby(default)";
   } else {
     roomName.innerText = room;
   }
@@ -73,3 +73,10 @@ function showUsers(users) {
   userList.innerHTML = `
     ${users.map((user) => `<li>${user.username}</li>`).join("")}`;
 }
+
+// // Check if there is users in a channel
+// function channelIsEmpty(users) {
+//   return document.getElementById(users).innerHTML.trim() == "";
+// }
+// // If true there is users in channel
+// console.log(channelIsEmpty("users"));
