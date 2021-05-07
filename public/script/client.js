@@ -13,87 +13,106 @@ const userList = document.getElementById("users");
 //});
 
 const socket = io();
+
+/////////// on connection börjar ////////////
 socket.on('connection', () => {
+
+  ///////////// Tar emot data ifrån login-form /////////////////
   loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const userName = e.target.elements.username.value
     const roomName = e.target.elements.roomname.value
+    console.log('Connected', socket.id)
     socket.emit("joinRoom", { username: userName, room: roomName });
-  })
+  });
+
+  ////////////////////// Skickar meddelande till HTML /////////////////
+  socket.on("message", function (message) {
+    const div = document.createElement("div");
+    div.classList.add("user-message");
+    div.innerHTML = `<div class="message-header">
+      <h5>${message.username}</h5>
+      <p class="time">${message.time}</p>
+      </div>
+      <p class="message-body">
+      ${message.text}
+      </p>`;
+    document.querySelector(".chat").appendChild(div);
+    // scroll down upon writing messages
+    shatContainer.scrollTo(0, document.body.scrollHeight);
+    //console.log(roomName);
+  });
+
+  ///////////////////// Tar emot data från chat-formet ///////////////
+  shatForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const shatMsg = e.target.elements.messagewritten.value;
+    // Send message to be read by the server
+    socket.emit("shatMessage", shatMsg);
+    // Empty and focus the textbox after sending a message
+    e.target.elements.messagewritten.value = "";
+    e.target.elements.messagewritten.focus();
+  });
+
 })
-// Joining shat
+/////////////////////////////////////////////////////////// ON CONNECTION SLUTAR /////////////////////////////////////////////////
 
-// Recieved messages from the server for render
-socket.on("message", function (message) {
-  // Renders message to DOM
-  const div = document.createElement("div");
-  div.classList.add("user-message");
-  div.innerHTML = `<div class="message-header">
-    <h5>${message.username}</h5>
-    <p class="time">${message.time}</p>
-    </div>
-    <p class="message-body">
-    ${message.text}
-    </p>`;
-  document.querySelector(".chat").appendChild(div);
 
-  // scroll down upon writing messages
-  shatContainer.scrollTo(0, document.body.scrollHeight);
+/////////// Recieved messages from the server for render
 
-  console.log(roomName);
-});
+///////////////////////////////////// What Room and what users ////////////////////////////////////
+// socket.on("usersInRoom", ({ room, users }) => {
+//   showRoomName(room);
+//   showUsers(users);
+// });
 
-// What Room and what users
-socket.on("usersInRoom", ({ room, users }) => {
-  showRoomName(room);
-  showUsers(users);
-});
+// shatForm.addEventListener("submit", (e) => {
+//   e.preventDefault();
+//   const shatMsg = e.target.elements.messagewritten.value;
+//   // Send message to be read by the server
+//   socket.emit("shatMessage", shatMsg);
+//   // Empty and focus the textbox after sending a message
+//   e.target.elements.messagewritten.value = "";
+//   e.target.elements.messagewritten.focus();
+// });
 
-shatForm.addEventListener("submit", (e) => {
-  e.preventDefault();
+///////////////////////////////////// Show roomname /////////////////////////////////////
+// function showRoomName(room) {
+//   console.log("kör showRoomName funktionen");
+//   if (room == "") {
+//     roomName.innerText = "Lobby(default)";
+//   } else {
+//     roomName.innerText = room;
+//   }
+//   console.log("room är: ", room);
+//   console.log("roomName är: ", roomName.innerText);
+// }
 
-  const shatMsg = e.target.elements.messagewritten.value;
+//////////////////////// Show all users in channel//////////////////////
+// function showUsers(users) {
+//   userList.innerHTML = `
+//     ${users.map((user) => `<li>${user.username}</li>`).join("")}`;
+// }
 
-  // Send message to be read by the server
-  socket.emit("shatMessage", shatMsg);
-
-  // Empty and focus the textbox after sending a message
-  e.target.elements.messagewritten.value = "";
-  e.target.elements.messagewritten.focus();
-});
-
-// Show roomname
-function showRoomName(room) {
-  console.log("kör showRoomName funktionen");
-  if (room == "") {
-    roomName.innerText = "Lobby(default)";
-  } else {
-    roomName.innerText = room;
-  }
-  console.log("room är: ", room);
-  console.log("roomName är: ", roomName.innerText);
-}
-
-// Show all users in channel
-function showUsers(users) {
-  userList.innerHTML = `
-    ${users.map((user) => `<li>${user.username}</li>`).join("")}`;
-}
-
-// // Check if there is users in a channel
+//////////////////////// Check if there is users in a channel/////////////////////
 // function channelIsEmpty(users) {
 //   return document.getElementById(users).innerHTML.trim() == "";
 // }
 // // If true there is users in channel
 // console.log(channelIsEmpty("users"));
+
+
+
+
 ////////////// stänger form ////////////
 
-function closeFormEditor() {
-  document.getElementById("toggle-chat").classList.toggle("hidden")
-  document.getElementById("loginForm").classList.toggle("hidden")
-  //chatBox.style.display = "flex"
-}
-function closeLogginForm() {
-  const loginForm = document.getElementById("loginForm")
-  loginForm.style.display = "none"
-}
+// function closeFormEditor() {
+//   document.getElementById("toggle-chat").classList.toggle("hidden")
+//   document.getElementById("loginForm").classList.toggle("hidden")
+
+// }
+
+// function closeLogginForm() {
+//   const loginForm = document.getElementById("loginForm")
+//   loginForm.style.display = "none"
+// }

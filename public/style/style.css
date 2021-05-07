@@ -176,11 +176,11 @@ form label {
   padding: 1rem;
 }
 .toggleChat {
-  display: none;
+  display: flex;
 }
 .toggleLoginForm {
   display: flex;
 }
 .hidden {
-  display: none;
+  display: flex;
 }

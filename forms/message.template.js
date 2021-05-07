@@ -1,11 +1,11 @@
-const moment = require("moment");
+// const moment = require("moment");
 
-function messageTemplate(username, text) {
-  return {
-    username,
-    text,
-    time: moment().format("HH:mm"),
-  };
-}
+// function messageTemplate(username, text) {
+//   return {
+//     username,
+//     text,
+//     time: moment().format("HH:mm"),
+//   };
+// }
 
-module.exports = messageTemplate;
+// module.exports = messageTemplate;

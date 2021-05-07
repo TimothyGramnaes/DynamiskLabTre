@@ -7,15 +7,15 @@ const server = http.createServer(app);
 const io = socketio(server, { pingTimeout: 25000 });
 
 // message template: User, message and time-stamp
-const messageTemplate = require("./forms/message.template");
+//const messageTemplate = require("./forms/message.template");
 
 // Utilities for users and rooms
-const {
-  joiningUser,
-  addCurrentUser,
-  leavingUser,
-  usersInRoom,
-} = require("./forms/users");
+// const {
+//   joiningUser,
+//   addCurrentUser,
+//   leavingUser,
+//   usersInRoom,
+// } = require("./forms/users");
 
 //// set static folder /////
 app.use(express.static("public"));
@@ -27,8 +27,8 @@ io.on("connection", (socket) => {
     const user = joiningUser(socket.id, username, room);
     console.log("join-room says hey");
     socket.join(user.room);
-    const socketRoomsSetValues = socket.rooms.values();
 
+    const socketRoomsSetValues = socket.rooms.values();
     const roomNameValueFromSet =
       (socketRoomsSetValues.next().value, socketRoomsSetValues.next().value);
 
@@ -42,57 +42,66 @@ io.on("connection", (socket) => {
       socket.id
     );
 
-    io.on("activeRooms", (data) => {
-      console.log(data);
-    });
+    // io.on("activeRooms", (data) => {
+    //   console.log(data);
+    // });
 
-    // welcomes the user logging in
-    socket.emit(
-      "message",
-      messageTemplate("ShatApp", "hej o välkommen till shatapp!")
-    );
+    ///////////// welcomes the user logging in ///////////
+    // socket.emit(
+    //   "message",
+    //   messageTemplate("ShatApp", "hej o välkommen till shatapp!")
+    // );
 
-    // displays message for all other users besides the user joining
-    socket.broadcast
-      .to(user.room)
-      .emit(
-        "message",
-        messageTemplate("ShatApp", `${user.username} shat up the app`)
-      );
+    ///////////// displays message for all other users besides the user joining //////////////
+    // socket.broadcast
+    //   .to(user.room)
+    //   .emit(
+    //     "message",
+    //     messageTemplate("ShatApp", `${user.username} shat up the app`)
+    //   );
 
-    // Users in rooms
-    io.to(user.room).emit("usersInRoom", {
-      room: user.room,
-      users: usersInRoom(user.room),
-    });
+    //////////// Users in rooms //////////////////
+    // io.to(user.room).emit("usersInRoom", {
+    //   room: user.room,
+    //   users: usersInRoom(user.room),
+    // });
+
   });
+  //////////////////////////////////////////////// här slutar join room /////////////////////////////////////////////////////////////////
 
-  // Shows when a user leaves
+  ///////////// Shows when a user leaves///////////
   socket.on("disconnect", () => {
     console.log("disconnect - ", socket.id);
 
-    const user = leavingUser(socket.id);
+    // const user = leavingUser(socket.id);
+    // if (user) {
+    //   io.to(user.room).emit(
+    //     "message",
+    //     messageTemplate("ShatApp", `${user.username} had enough`)
+    //   );
 
-    if (user) {
-      io.to(user.room).emit(
-        "message",
-        messageTemplate("ShatApp", `${user.username} had enough`)
-      );
-
-      // Users in rooms
-      io.to(user.room).emit("usersInRoom", {
-        room: user.room,
-        users: usersInRoom(user.room),
-      });
-    }
+    ///////////// Users in rooms ////////////////
+    //   io.to(user.room).emit("usersInRoom", {
+    //     room: user.room,
+    //     users: usersInRoom(user.room),
+    //   });
+    // }
   });
 
-  // Recieve messages from front-end
-  socket.on("shatMessage", (shatMsg) => {
-    const user = addCurrentUser(socket.id);
-    io.to(user.room).emit("message", messageTemplate(user.username, shatMsg));
-  });
+  /////////// Recieve messages from front-end /////////
+  // socket.on("shatMessage", (shatMsg) => {
+  //   const user = addCurrentUser(socket.id);
+  //   io.to(user.room).emit("message", messageTemplate(user.username, shatMsg));
+  // });
+
+  function joiningUser(id, username, room) {
+    const user = { id, username, room };
+    users.push(user);
+    return user;
+  }
+
 });
+/////////////////////////////////////////////////////////////// här slutar connection ///////////////////////////////////////////////////////
 
 /// connection with server ///////
 const port = 3000;
