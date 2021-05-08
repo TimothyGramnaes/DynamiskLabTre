@@ -5,9 +5,9 @@ const socketio = require("socket.io");
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server, { pingTimeout: 25000 });
-
+const users = [];
 // message template: User, message and time-stamp
-//const messageTemplate = require("./forms/message.template");
+const messageTemplate = require("./forms/message.template");
 
 // Utilities for users and rooms
 // const {
@@ -17,24 +17,22 @@ const io = socketio(server, { pingTimeout: 25000 });
 //   usersInRoom,
 // } = require("./forms/users");
 
-//// set static folder /////
+//////////////////////////// set static folder /////////////////////////
 app.use(express.static("public"));
 
 io.on("connection", (socket) => {
   console.log("connected - ", socket.id);
 
+  /////////////////////////////// Join room börjar ///////////////////////////////////////////////
   socket.on("joinRoom", ({ username, room }) => {
     const user = joiningUser(socket.id, username, room);
     console.log("join-room says hey");
     socket.join(user.room);
-
     const socketRoomsSetValues = socket.rooms.values();
     const roomNameValueFromSet =
       (socketRoomsSetValues.next().value, socketRoomsSetValues.next().value);
-
     // console.log(socketRoomsSetValues.next().value); // loggar ut socket.id
     // console.log(socketRoomsSetValues.next().value); // loggar ut roomname
-
     console.log(
       "Current room name is:",
       roomNameValueFromSet,
@@ -47,10 +45,10 @@ io.on("connection", (socket) => {
     // });
 
     ///////////// welcomes the user logging in ///////////
-    // socket.emit(
-    //   "message",
-    //   messageTemplate("ShatApp", "hej o välkommen till shatapp!")
-    // );
+    socket.emit(
+      "message",
+      messageTemplate("ShatApp", "hej o välkommen till shatapp!")
+    );
 
     ///////////// displays message for all other users besides the user joining //////////////
     // socket.broadcast
@@ -87,17 +85,22 @@ io.on("connection", (socket) => {
     //   });
     // }
   });
+  ////////////////////////////////////  här slutar disconnect ////////////////////////////////
 
   /////////// Recieve messages from front-end /////////
-  // socket.on("shatMessage", (shatMsg) => {
-  //   const user = addCurrentUser(socket.id);
-  //   io.to(user.room).emit("message", messageTemplate(user.username, shatMsg));
-  // });
-
+  socket.on("shatMessage", (shatMsg) => {
+    const user = addCurrentUser(socket.id);
+    io.to(user.room).emit("message", messageTemplate(user.username, shatMsg));
+  });
+  //////////// Skapar en user och pushar till users ///////
   function joiningUser(id, username, room) {
     const user = { id, username, room };
     users.push(user);
     return user;
+  }
+  //////////// Get current user ////////////////
+  function addCurrentUser(id) {
+    return users.find((user) => user.id == id);
   }
 
 });

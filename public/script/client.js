@@ -4,7 +4,7 @@ const loginForm = document.getElementById("login-form")
 // const roomName = document.querySelector(".room-name");
 const roomName = document.getElementById("output-room-name");
 const userList = document.getElementById("users");
-
+const users = [];
 // Uses query-string to get the user and the room
 // from the URL. Link: https://cdnjs.com/libraries/query-string
 //const { username, room } = Qs.parse(window.location.search, {
@@ -12,10 +12,11 @@ const userList = document.getElementById("users");
 // ignoreQueryPrefix: true,
 //});
 
-const socket = io();
+const socket = io('http://localhost:3000');
 
 /////////// on connection börjar ////////////
-socket.on('connection', () => {
+socket.on('connect', () => {
+  console.log('Du är connectad!')
 
   ///////////// Tar emot data ifrån login-form /////////////////
   loginForm.addEventListener('submit', (e) => {
@@ -26,35 +27,39 @@ socket.on('connection', () => {
     socket.emit("joinRoom", { username: userName, room: roomName });
   });
 
-  ////////////////////// Skickar meddelande till HTML /////////////////
-  socket.on("message", function (message) {
-    const div = document.createElement("div");
-    div.classList.add("user-message");
-    div.innerHTML = `<div class="message-header">
+});
+
+////////////////////// Skickar meddelande till HTML /////////////////
+
+socket.on("message", function (message) {
+  const div = document.createElement("div");
+  div.classList.add("user-message");
+  div.innerHTML = `<div class="message-header">
       <h5>${message.username}</h5>
       <p class="time">${message.time}</p>
       </div>
       <p class="message-body">
       ${message.text}
       </p>`;
-    document.querySelector(".chat").appendChild(div);
-    // scroll down upon writing messages
-    shatContainer.scrollTo(0, document.body.scrollHeight);
-    //console.log(roomName);
-  });
+  document.querySelector(".chat").appendChild(div);
+  // scroll down upon writing messages
+  shatContainer.scrollTo(0, document.body.scrollHeight);
+  //console.log(roomName);
+});
 
-  ///////////////////// Tar emot data från chat-formet ///////////////
-  shatForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const shatMsg = e.target.elements.messagewritten.value;
-    // Send message to be read by the server
-    socket.emit("shatMessage", shatMsg);
-    // Empty and focus the textbox after sending a message
-    e.target.elements.messagewritten.value = "";
-    e.target.elements.messagewritten.focus();
-  });
+///////////////////// Tar emot data från chat-formet ///////////////
 
-})
+shatForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const shatMsg = e.target.elements.messagewritten.value;
+  // Send message to be read by the server
+  socket.emit("shatMessage", shatMsg);
+  // Empty and focus the textbox after sending a message
+  e.target.elements.messagewritten.value = "";
+  e.target.elements.messagewritten.focus();
+});
+
+
 /////////////////////////////////////////////////////////// ON CONNECTION SLUTAR /////////////////////////////////////////////////
 
 
