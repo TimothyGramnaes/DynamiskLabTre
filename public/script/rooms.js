@@ -9,10 +9,10 @@ const activeRooms = [];
 createRoomBtn.addEventListener("click", () => {
     const newRoomName = newRoom.value;
 
-    //const optionElement = document.createElement("option");
-    // roomDropdown.appendChild(optionElement);
-    // optionElement.setAttribute("value", newRoomName);
-    // optionElement.innerText = newRoomName;
+    const optionElement = document.createElement("option");
+    roomDropdown.appendChild(optionElement);
+    optionElement.setAttribute("value", newRoomName);
+    optionElement.innerText = newRoomName;
 
     // console.log("New room created:", newRoomName);
 
