@@ -1,6 +1,8 @@
 const createRoomBtn = document.getElementById("create-room-btn");
 const newRoom = document.getElementById("room-name");
 const option = document.getElementsByTagName('option')
+let optionValue = '';
+const listOfOptionValues = []
 
 // const socket = io();
 
@@ -8,46 +10,36 @@ const option = document.getElementsByTagName('option')
 
 
 createRoomBtn.addEventListener("click", () => {
-	// loppa igenom alla option's "value" som sedan kan jämföras med det nya 'newRoom'
+
+	// loopa igenom alla option's "value" som sedan ska jämföras med det nya 'newRoom'
 	Array.from(roomDropdown.options).forEach(function (optionElement) {
-		let optionValue = optionElement.value
+		optionValue = optionElement.value
 	
 		console.log('Option value:', optionValue)
 
-		return optionValue;
+		// const checkForDuplicateRoomNames = listOfOptionValues.includes(newRoom)
+		// listOfOptionValues.push(optionValue)
 	})
 	
-	// if (optionValue === newRoom) {
-	// 	console.log('this room already exists')
-	// } else {
-	// 	const newRoomName = newRoom.value;
-	
-	// 	const optionElement = document.createElement("option");
-	// 	roomDropdown.appendChild(optionElement);
-	// 	optionElement.setAttribute("value", newRoomName);
-	// 	optionElement.innerText = newRoomName;
-		
-	// 	console.log("New room created:", newRoomName);
-	// }
+	// console.log('arrayen:', listOfOptionValues)
+	// const checkForDuplicateRoomNames = listOfOptionValues.includes(newRoom)
+	// console.log(checkForDuplicateRoomNames)
 
-	// =============== console.log value of selected option in dropdown menu
-	// const x = roomDropdown.selectedIndex
-	// const selectedOptionValue = document.getElementsByTagName('option')[x].value
-	// console.log(selectedOptionValue, 'is currently selected in dropdown')
-	// ============== Början på if sats för check roomDropdown har en option med samma value som newRoom
-	// if ('roomDropdown har en option med samma value som newRoom') {
-	// 	console.log('found duplicate')
-	// } else {
-	// 	console.log('didnt find duplicate')
-	// 	const newRoomName = newRoom.value;
+	if (optionValue === newRoom) {
+		console.log('room already exists')
+	} else {
+		// problem: optionValue sätts till det sista i listan, vilket är 'Kloaken'
+		console.log('optionValue är:', optionValue)
+		const newRoomName = newRoom.value;
 	
-	// 	const optionElement = document.createElement("option");
-	// 	roomDropdown.appendChild(optionElement);
-	// 	optionElement.setAttribute("value", newRoomName);
-	// 	optionElement.innerText = newRoomName;
+		const optionElement = document.createElement("option");
+		roomDropdown.appendChild(optionElement);
+		optionElement.setAttribute("value", newRoomName);
+		optionElement.innerText = newRoomName;
+		
+		console.log("New room created:", newRoomName);
+	}
 	
-	// 	console.log("New room created:", newRoomName);
-	// }
 	
 	
 	// ========== ORIGINALKOD NEDANFÖR =========================================== //
@@ -62,9 +54,9 @@ createRoomBtn.addEventListener("click", () => {
 	// console.log("New room created:", newRoomName);
 	
 	// ========== ORIGINALKOD OVANFÖR ============================================ //
-	
-	// if (optionElement.value === 'value på ett annat option element')
-	// console.log(option.value)
+
+
+
 
 	// ============ Potentiallt onödig kod?
   // activeRooms.push(newRoomName);
