@@ -7,21 +7,20 @@ const newRoom = document.getElementById("room-name");
 const activeRooms = [];
 
 createRoomBtn.addEventListener("click", () => {
-    const newRoomName = newRoom.value;
+  const newRoomName = newRoom.value;
 
-    const optionElement = document.createElement("option");
-    roomDropdown.appendChild(optionElement);
-    optionElement.setAttribute("value", newRoomName);
-    optionElement.innerText = newRoomName;
+  const optionElement = document.createElement("option");
+  roomDropdown.appendChild(optionElement);
+  optionElement.setAttribute("value", newRoomName);
+  optionElement.innerText = newRoomName;
 
-    // console.log("New room created:", newRoomName);
+  // console.log("New room created:", newRoomName);
 
-    activeRooms.push(newRoomName);
-    //   showActiveRooms();
+  activeRooms.push(newRoomName);
+  //   showActiveRooms();
 
-    socket.emit("activeRooms", activeRooms);
-    console.log(activeRooms)
-    // return newRoomName;
+  socket.emit("activeRooms", activeRooms);
+  console.log(activeRooms);
 });
 
 //socket.on("")

@@ -1,12 +1,12 @@
 const express = require("express");
 const http = require("http");
 const socketio = require("socket.io");
-const activeRooms = []
+// const activeRooms = []
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server, { pingTimeout: 25000 });
 const users = [];
-const roomNamesFromSockets = []
+const roomNamesFromSockets = [];
 // message template: User, message and time-stamp
 const messageTemplate = require("./forms/message.template");
 
@@ -23,14 +23,16 @@ app.use(express.static("public"));
 
 io.on("connection", (socket) => {
   console.log("connected - ", socket.id);
-  console.log('I connection:', roomNamesFromSockets)
+  console.log("I connection:", roomNamesFromSockets);
 
-  socket.on("activeRooms", (data) => {
-    console.log('Från activeRooms array', data);
-    activeRooms.push(data)
-    socket.emit('displayRooms', activeRooms)
-  });
- 
+  // socket.on("activeRooms", (data) => {
+  //   console.log('Från activeRooms array', data);
+  //   activeRooms.push(data)
+  //   socket.emit('displayRooms', roomNamesFromSockets)
+  // });
+
+  socket.emit("activeRooms", roomNamesFromSockets);
+
   /////////////////////////////// Join room börjar ///////////////////////////////////////////////
   socket.on("joinRoom", ({ username, room }) => {
     const user = joiningUser(socket.id, username, room);
@@ -47,9 +49,9 @@ io.on("connection", (socket) => {
       "and socket id is:",
       socket.id
     );
-    
-    roomNamesFromSockets.push(roomNameValueFromSet)
-    console.log(roomNamesFromSockets)
+
+    roomNamesFromSockets.push(roomNameValueFromSet);
+    console.log(roomNamesFromSockets);
 
     ///////////// welcomes the user logging in ///////////
     socket.emit(
@@ -70,7 +72,6 @@ io.on("connection", (socket) => {
       room: user.room,
       users: usersInRoom(user.room),
     });
-
   });
   //////////////////////////////////////////////// HÄR SLUTAR JOIN ROOM /////////////////////////////////////////////////////////////////
 
@@ -119,7 +120,6 @@ io.on("connection", (socket) => {
       return users.splice(i, 1)[0];
     }
   }
-
 });
 /////////// Visar användare i rummet ////////////
 function usersInRoom(room) {
