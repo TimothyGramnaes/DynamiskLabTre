@@ -115,6 +115,9 @@ form label {
 .create-room-btn {
   margin: 0 auto;
 }
+:disabled {
+  background-color: grey;
+}
 
 .form-control {
   display: flex;
@@ -175,12 +178,16 @@ form label {
   margin-bottom: 1rem;
   padding: 1rem;
 }
-.toggleChat {
+
+.fixedLoginForm {
   display: flex;
-}
-.toggleLoginForm {
-  display: flex;
+  flex-direction: column;
+  position: absolute;
 }
 .hidden {
-  display: flex;
+  display: none;
+}
+.form-input {
+  width: 20rem;
+  margin-bottom: 2rem;
 }

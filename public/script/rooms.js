@@ -1,28 +1,30 @@
-// const createRoomBtn = document.getElementById("create-room-btn");
-// const roomDropdown = document.getElementById("chat-room");
-// const newRoom = document.getElementById("room-name");
+const createRoomBtn = document.getElementById("create-room-btn");
+const roomDropdown = document.getElementById("chat-room");
+const newRoom = document.getElementById("room-name");
 
 // const socket = io();
 
-// const activeRooms = [];
+const activeRooms = [];
 
-// createRoomBtn.addEventListener("click", () => {
-//   const newRoomName = newRoom.value;
-//   const optionElement = document.createElement("option");
+createRoomBtn.addEventListener("click", () => {
+    const newRoomName = newRoom.value;
 
-//   roomDropdown.appendChild(optionElement);
-//   optionElement.setAttribute("value", newRoomName);
-//   optionElement.innerText = newRoomName;
-//   // console.log("New room created:", newRoomName);
+    //const optionElement = document.createElement("option");
+    // roomDropdown.appendChild(optionElement);
+    // optionElement.setAttribute("value", newRoomName);
+    // optionElement.innerText = newRoomName;
 
-//   activeRooms.push(newRoomName);
-//   showActiveRooms();
+    // console.log("New room created:", newRoomName);
 
-//   socket.emit("activeRooms", activeRooms);
-//   // return newRoomName;
-// });
+    activeRooms.push(newRoomName);
+    //   showActiveRooms();
 
-// //socket.on("")
+    socket.emit("activeRooms", activeRooms);
+    console.log(activeRooms)
+    // return newRoomName;
+});
+
+//socket.on("")
 
 // function showActiveRooms() {
 //   // const rooms =
