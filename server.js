@@ -35,23 +35,12 @@ io.on("connection", (socket) => {
 
   /////////////////////////////// Join room börjar ///////////////////////////////////////////////
   socket.on("joinRoom", ({ username, room }) => {
+    room = room || "lobby";
     const user = joiningUser(socket.id, username, room);
-    console.log("join-room says hey");
     socket.join(user.room);
-    const socketRoomsSetValues = socket.rooms.values();
-    const roomNameValueFromSet =
-      (socketRoomsSetValues.next().value, socketRoomsSetValues.next().value);
-    // console.log(socketRoomsSetValues.next().value); // loggar ut socket.id
-    // console.log(socketRoomsSetValues.next().value); // loggar ut roomname
-    console.log(
-      "Current room name is:",
-      roomNameValueFromSet,
-      "and socket id is:",
-      socket.id
-    );
 
-    roomNamesFromSockets.push(roomNameValueFromSet);
-    console.log(roomNamesFromSockets);
+    roomNamesFromSockets.push(room);
+    console.log("rooms", roomNamesFromSockets);
 
     ///////////// welcomes the user logging in ///////////
     socket.emit(
