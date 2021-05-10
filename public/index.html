@@ -5,20 +5,49 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style/style.css">
+  <!-- 
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@1,800&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src=https://kit.fontawesome.com/369fccfd9c.js crossorigin="anonymous"></script>
+  <script defer src="./script/rooms.js"></script> -->
 
-  
+  <!-- script från chatview -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@1,800&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
   <script src=https://kit.fontawesome.com/369fccfd9c.js crossorigin="anonymous"></script>
   <script  src="/socket.io/socket.io.js"></script>
+  <script defer src="./script/client.js"></script>
   <script defer src="./script/rooms.js"></script>
+  <!-- script från chatview slutar -->
+  
   <title>ShatApp</title>
 </head>
 <body class="start-page-body">
 
-  <div class="container glass-design-main">
+<!-- Orginal logginform -->
+  <div id="loginForm" class="container glass-design-main fixedLoginForm">
     <h1 class="logo">Shat<b>App</b></h1>
-    <form action="chatView.html">
+    <!-- <form class="form-control  " id="login-form" action="" >
+      <label for="username">Username</label>
+      <input
+        class="form-input"
+        type="text"
+        name="username"
+        id="username"
+        placeholder="Enter username..."
+        required
+      />
+      <label for="room">Room Name</label>
+            <input
+              class="form-input"
+              type="text"
+              name="roomname"
+              id="room-name"
+              placeholder="Enter room name..."
+            />
+            <button id="submit_button"  type="submit" class="btn create-room-btn">Join Chat</button>
+    </form>  -->
+    <form id="login-form" action="" >
       <div class="form-control username-input">
         <label for="username">Username</label>
         <input
@@ -36,7 +65,7 @@
             <label for="room">Room Name</label>
             <input
               type="text"
-              name="room"
+              name="roomname"
               id="room-name"
               placeholder="Enter room name..."
             />
@@ -54,7 +83,9 @@
         <button type="button" id="create-room-btn" class="create-room-btn btn">Create Room</button>
       </div>
       <div class="form-control">
+
         <!-- Form kontrollen -->
+
         <div class="chat-room">
           <label for="chat-room">Active rooms</label>
           <select name="chat-room" id="chat-room">
@@ -62,9 +93,64 @@
           </select>
         </div>
       </div>
-      <button type="submit" class="btn create-room-btn">Join Chat</button>
+      <button  type="submit" class="btn create-room-btn">Join Chat</button>
     </form>
+
+
   </div>
+  <!-- Orginal logginform slutar -->
+
+  <!-- Chat form implementerad  -->
+  <div id="toggle-chat" class="chat-view-container hidden ">
+    <div class="sidebar">
+      <h3 class="logo">Shat<b>App</b></h3>
+      <div class="room">
+        <h4>Room</h4>
+        <p class="room-name" id="output-room-name"></p>
+      </div>
+      <div class="users">
+        <h4>Users</h4>
+        <ul id="users"></ul>
+      </div>
+      <button class="leave">Leave Room</button>
+      
+    </div>
+
+    <div class="chat-container">
+
+      <div class="chat">
+        <div class="user-message">
+          <div class="message-header">
+            <h5>Bosse</h5>
+            <p class="time">13:46</p>
+          </div>
+          <p class="message-body">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit laborum quas similique.
+          </p>             
+        </div>
+      </div>
+
+      <div class="text-input">
+        <form id="message-form">
+          <input 
+            type="text"
+            id="messagewritten"
+            placeholder="Enter Message..."
+            required
+            autocomplete="off"
+          >
+          <button class="button" type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script
+  src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.10.1/qs.min.js"
+  integrity="sha512-aTKlYRb1QfU1jlF3k+aS4AqTpnTXci4R79mkdie/bp6Xm51O5O3ESAYhvg6zoicj/PD6VYY0XrYwsWLcvGiKZQ=="
+  crossorigin="anonymous"
+></script>
+  <!-- Chat form implementerad  -->
   
 </body>
 </html>
