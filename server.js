@@ -128,5 +128,5 @@ function usersInRoom(room) {
 /// connection with server ///////
 const port = 3000;
 server.listen(port, () => {
-  console.log(`Sever is running on port ${port}`);
+  console.log(`Server is running on port ${port}`);
 });

@@ -1,8 +1,9 @@
 const createRoomBtn = document.getElementById("create-room-btn");
 const newRoom = document.getElementById("room-name");
 const option = document.getElementsByTagName('option')
+const statusText = document.getElementById('status-text')
 let optionValue = '';
-const listOfOptionValues = []
+let optionValuesArray = []
 
 // const socket = io();
 
@@ -12,33 +13,24 @@ const listOfOptionValues = []
 createRoomBtn.addEventListener("click", () => {
 
 	// loopa igenom alla option's "value" som sedan ska jämföras med det nya 'newRoom'
-	Array.from(roomDropdown.options).forEach(function (optionElement) {
+	optionValuesArray = Array.from(roomDropdown.options)
+	
+	optionValuesArray.every(function (optionElement) {
 		optionValue = optionElement.value
 	
-		console.log('Option value:', optionValue)
-
-		// const checkForDuplicateRoomNames = listOfOptionValues.includes(newRoom)
-		// listOfOptionValues.push(optionValue)
-	})
-	
-	// console.log('arrayen:', listOfOptionValues)
-	// const checkForDuplicateRoomNames = listOfOptionValues.includes(newRoom)
-	// console.log(checkForDuplicateRoomNames)
-
-	if (optionValue === newRoom) {
-		console.log('room already exists')
-	} else {
-		// problem: optionValue sätts till det sista i listan, vilket är 'Kloaken'
-		console.log('optionValue är:', optionValue)
-		const newRoomName = newRoom.value;
-	
-		const optionElement = document.createElement("option");
-		roomDropdown.appendChild(optionElement);
-		optionElement.setAttribute("value", newRoomName);
-		optionElement.innerText = newRoomName;
 		
-		console.log("New room created:", newRoomName);
-	}
+		if (optionValue === newRoom.value) {
+			console.log('The room name', optionValue, 'already exists')
+			statusText.innerText = `A room called ${optionValue} already exists`
+			statusText.style.color = 'red'
+			return false
+		} else {
+			console.log('Option value:', optionValue)
+			statusText.innerText = `The room ${newRoom.value} was added to list`
+			statusText.style.color = 'green'
+			return true
+		}
+	})
 	
 	
 	
