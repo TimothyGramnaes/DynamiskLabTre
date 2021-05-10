@@ -39,7 +39,16 @@ io.on("connection", (socket) => {
     const user = joiningUser(socket.id, username, room);
     socket.join(user.room);
 
-    roomNamesFromSockets.push(room);
+    // if sats för dubletter
+    const checkForDuplicateRoomNames = roomNamesFromSockets.includes('Garaget')
+
+    if (checkForDuplicateRoomNames) {
+      console.log('found duplicate')
+    } else {
+      console.log('didnt find duplicate')
+      roomNamesFromSockets.push(room);
+    }
+
     console.log("rooms", roomNamesFromSockets);
 
     ///////////// welcomes the user logging in ///////////

@@ -31,7 +31,8 @@ socket.on("connect", () => {
   loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const userName = e.target.elements.username.value;
-    const roomName = e.target.elements.roomname.value;
+    // const roomName = e.target.elements.roomname.value;
+    const roomName = roomDropdown.value;
 
     console.log("Connected", socket.id);
     socket.emit("joinRoom", { username: userName, room: roomName });
@@ -82,14 +83,11 @@ socket.on("usersInRoom", ({ room, users }) => {
 
 ///////////////////////////////////// Show roomname /////////////////////////////////////
 function showRoomName(room) {
-  console.log("kör showRoomName funktionen");
   if (room == "") {
     roomName.innerText = "Lobby(default)";
   } else {
     roomName.innerText = room;
   }
-  console.log("room är: ", room);
-  console.log("roomName är: ", roomName.innerText);
 }
 
 //////////////////////// Show all users in channel//////////////////////
