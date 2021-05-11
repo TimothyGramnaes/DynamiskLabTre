@@ -10,7 +10,6 @@ const roomNamesFromSockets = [];
 // message template: User, message and time-stamp
 const messageTemplate = require("./forms/message.template");
 
-
 // Utilities for users and rooms
 // const {
 //   joiningUser,
@@ -36,17 +35,17 @@ io.on("connection", (socket) => {
 
   /////////////////////////////// Join room börjar ///////////////////////////////////////////////
   socket.on("joinRoom", ({ username, room }) => {
-    room = room || "lobby";
+    room = room || "Lobby";
     const user = joiningUser(socket.id, username, room);
     socket.join(user.room);
 
     // if sats för dubletter
-    const checkForDuplicateRoomNames = roomNamesFromSockets.includes(room)
+    const checkForDuplicateRoomNames = roomNamesFromSockets.includes(room);
 
     if (checkForDuplicateRoomNames) {
-      console.log('found duplicate')
+      console.log("found duplicate");
     } else {
-      console.log('didnt find duplicate')
+      console.log("didnt find duplicate");
       roomNamesFromSockets.push(room);
     }
 
@@ -59,12 +58,12 @@ io.on("connection", (socket) => {
     );
 
     ///////////// displays message for all other users besides the user joining //////////////
-    // socket.broadcast
-    //   .to(user.room)
-    //   .emit(
-    //     "message",
-    //     messageTemplate("ShatApp", `${user.username} shat up the app`)
-    //   );
+    socket.broadcast
+      .to(user.room)
+      .emit(
+        "message",
+        messageTemplate("ShatApp", `${user.username} shat up the app`)
+      );
 
     //////////// Visar alla användare i rummet //////////////////
     io.to(user.room).emit("usersInRoom", {

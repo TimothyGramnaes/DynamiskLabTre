@@ -73,11 +73,12 @@ shatForm.addEventListener("submit", (e) => {
 });
 
 leaveRoomBtn.addEventListener("click", (e) => {
-  e.preventDefault();
+  // e.preventDefault();
 
-  document.getElementById("loginForm").style.display = "flex";
-  document.getElementById("toggle-chat").classList.toggle("hidden")
-})
+  // document.getElementById("loginForm").style.display = "flex";
+  // document.getElementById("toggle-chat").classList.toggle("hidden");
+  location.reload();
+});
 /////////////////////////////////////////////////////////// ON CONNECT SLUTAR /////////////////////////////////////////////////
 
 /////////// Recieved messages from the server for render
