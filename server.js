@@ -77,6 +77,8 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("disconnect - ", socket.id);
 
+    // io.sockets.in(room).leave(room);
+
     const user = leavingUser(socket.id);
     if (user) {
       io.to(user.room).emit(
@@ -90,6 +92,14 @@ io.on("connection", (socket) => {
         users: usersInRoom(user.room),
       });
     }
+    console.log("Användare kvar i rummet: ", users.length);
+    if (users.length === 0) {
+      // loopa genom roomNamesFromSocket för att ta bort
+      // user.room
+      console.log("Nu var det tomt!");
+      roomNamesFromSockets.splice(user.room);
+    }
+    //io.sockets.in(user.room).leave();
   });
   /////////////////////////////////////////////  HÄR SLUTAR DISCONNECT ////////////////////////////////
 
@@ -117,6 +127,7 @@ io.on("connection", (socket) => {
     if (i !== -1) {
       return users.splice(i, 1)[0];
     }
+    // console.log("Users left in shat: ", users.length);
   }
 });
 /////////// Visar användare i rummet ////////////

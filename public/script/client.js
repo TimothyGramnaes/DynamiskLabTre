@@ -107,8 +107,8 @@ function showUsers(users) {
 }
 
 //////////////////////// Check if there is users in a channel/////////////////////
-// function channelIsEmpty(users) {
-//   return document.getElementById(users).innerHTML.trim() == "";
-// }
-// // If true there is users in channel
-// console.log(channelIsEmpty("users"));
+function channelIsEmpty(users) {
+  return document.getElementById(users).innerHTML.trim() == "";
+}
+// If true there is users in channel
+console.log(channelIsEmpty("users"));
