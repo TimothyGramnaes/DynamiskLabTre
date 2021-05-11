@@ -147,9 +147,9 @@ form label {
 .chat-container {
   overflow-y: scroll;
   max-height: 90vh;
-  width: 80%;
+  width: 100%;
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
   flex-direction: column;
 }
 
@@ -170,7 +170,7 @@ form label {
 
 .chat-view-container {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   width: 100%;
   border-radius: 1.5rem;
   overflow: hidden;
@@ -180,11 +180,32 @@ form label {
 }
 
 .user-message {
-  border: 1px solid black;
   margin-bottom: 1rem;
-  padding: 1rem;
+  max-width: 30rem;
+  padding: 1.25rem;
+  border-radius: 1rem;
+  margin: 1rem;
+  background: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0.4)
+  );
 }
-
+.message-header {
+  display: flex;
+  justify-content: space-between;
+}
+.message-header h5 {
+  margin: 0;
+  font-size: 1rem;
+}
+.time {
+  padding-right: 1rem;
+  margin: 0;
+}
+.message-body {
+  margin-bottom: 0;
+}
 .fixedLoginForm {
   display: flex;
   flex-direction: column;
@@ -207,4 +228,11 @@ form label {
 
 .text-input {
   padding: 1rem;
+  width: 100%;
+}
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
 }
