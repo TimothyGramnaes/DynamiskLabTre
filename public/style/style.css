@@ -140,17 +140,17 @@ form label {
 }
 
 .sidebar {
-  background: aliceblue;
   padding: 2rem;
   width: 20%;
 }
 
 .chat-container {
-  background: lightgoldenrodyellow;
-  padding: 2rem;
   overflow-y: scroll;
   max-height: 90vh;
   width: 80%;
+  display: flex;
+  justify-content:space-between;
+  flex-direction: column;
 }
 
 ::-webkit-scrollbar {
@@ -172,6 +172,11 @@ form label {
   display: flex;
   justify-content: space-between;
   width: 100%;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  max-width: 1200px;
+  margin: 0rem 2rem;
+  height: 75vh;
 }
 
 .user-message {
@@ -198,4 +203,8 @@ form label {
   font-weight: 600;
   font-size: 0.8rem;
   line-height: 0.8rem;
+}
+
+.text-input {
+  padding: 1rem;
 }
