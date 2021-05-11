@@ -85,7 +85,7 @@ socket.on("usersInRoom", ({ room, users }) => {
 ///////////////////////////////////// Show roomname /////////////////////////////////////
 function showRoomName(room) {
   if (room == "") {
-    roomName.innerText = "Lobby(default)";
+    roomName.innerText = "Lobby";
   } else {
     roomName.innerText = room;
   }
@@ -94,7 +94,9 @@ function showRoomName(room) {
 //////////////////////// Show all users in channel//////////////////////
 function showUsers(users) {
   userList.innerHTML = `
-    ${users.map((user) => `<li>${user.username}</li>`).join("")}`;
+    ${users
+      .map((user) => `<li> <i class="fas fa-user"></i>${user.username}</li>`)
+      .join("")}`;
 }
 
 //////////////////////// Check if there is users in a channel/////////////////////

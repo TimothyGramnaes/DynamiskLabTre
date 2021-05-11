@@ -182,8 +182,28 @@ form label {
   height: 75vh;
 }
 
+.room {
+  display: flex;
+  flex-direction: row;
+}
+
+.room img {
+  color: rgba(120, 125, 180, 0.5);
+  margin-right: 0.5rem;
+  opacity: 0.75;
+}
+
+.room-name {
+  font-size: 1.34rem;
+  font-weight: 600;
+}
+
 .leave {
-  background-color: #787db4;
+  background: linear-gradient(
+    to right bottom,
+    rgba(120, 125, 180, 0.4),
+    rgba(120, 125, 180, 1)
+  );
   border: none;
   padding: 0.75rem 1rem;
   font-family: "Poppins", sans-serif;
@@ -192,6 +212,30 @@ form label {
   letter-spacing: 1px;
   color: white;
   border-radius: 0.7rem;
+  cursor: pointer;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+li {
+  background: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0.4),
+    rgba(255, 255, 255, 0.1)
+  );
+  height: 1.5rem;
+  padding: 0.7rem 1rem 0.7rem 1rem;
+  border-radius: 0.4rem;
+}
+
+li i {
+  margin-right: 1rem;
+  color: rgba(120, 125, 180, 0.7);
 }
 
 .user-message {
