@@ -147,9 +147,9 @@ form label {
 .chat-container {
   overflow-y: scroll;
   max-height: 90vh;
-  width: 80%;
+  width: 100%;
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
   flex-direction: column;
 }
 
@@ -170,7 +170,7 @@ form label {
 
 .chat-view-container {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   width: 100%;
   border-radius: 1.5rem;
   overflow: hidden;
@@ -236,7 +236,6 @@ form label {
 input:focus {
   outline: none
 }
-
 .fixedLoginForm {
   display: flex;
   flex-direction: column;
