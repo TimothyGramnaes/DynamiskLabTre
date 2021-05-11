@@ -10,6 +10,7 @@ const roomNamesFromSockets = [];
 // message template: User, message and time-stamp
 const messageTemplate = require("./forms/message.template");
 
+
 // Utilities for users and rooms
 // const {
 //   joiningUser,
@@ -40,7 +41,7 @@ io.on("connection", (socket) => {
     socket.join(user.room);
 
     // if sats för dubletter
-    const checkForDuplicateRoomNames = roomNamesFromSockets.includes('Garaget')
+    const checkForDuplicateRoomNames = roomNamesFromSockets.includes(room)
 
     if (checkForDuplicateRoomNames) {
       console.log('found duplicate')
