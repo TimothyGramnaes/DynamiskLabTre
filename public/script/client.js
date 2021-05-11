@@ -2,7 +2,7 @@ const shatForm = document.getElementById("message-form");
 const shatContainer = document.querySelector(".chat-container");
 const loginForm = document.getElementById("login-form");
 const submitButton = document.getElementById("submit_button");
-
+const leaveRoomBtn = document.getElementById("leave-room");
 // Room element for startpage
 const roomDropdown = document.getElementById("chat-room");
 
@@ -72,6 +72,12 @@ shatForm.addEventListener("submit", (e) => {
   e.target.elements.messagewritten.focus();
 });
 
+leaveRoomBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  document.getElementById("loginForm").style.display = "flex";
+  document.getElementById("toggle-chat").classList.toggle("hidden")
+})
 /////////////////////////////////////////////////////////// ON CONNECT SLUTAR /////////////////////////////////////////////////
 
 /////////// Recieved messages from the server for render

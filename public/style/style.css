@@ -108,7 +108,7 @@ form label {
 .btn {
   width: 100%;
   margin: 0 auto;
-  background: rgb(89, 184, 89);
+
   color: white;
   font-family: "Poppins";
   border: none;
@@ -123,6 +123,19 @@ form label {
 
 .create-room-btn {
   margin: 0 auto;
+  background: linear-gradient(
+    to right bottom,
+    rgba(120, 125, 180, 0.4),
+    rgba(120, 125, 180, 1)
+  );
+}
+.join-room-btn {
+  margin: 0 auto;
+  background: linear-gradient(
+    to right bottom,
+    rgb(89, 184, 89, 0.6),
+    rgb(89, 184, 89, 1)
+  );
 }
 :disabled {
   background-color: grey;
@@ -231,6 +244,7 @@ li {
   height: 1.5rem;
   padding: 0.7rem 1rem 0.7rem 1rem;
   border-radius: 0.4rem;
+  margin-bottom: 0.5rem;
 }
 
 li i {
