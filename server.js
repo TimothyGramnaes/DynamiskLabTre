@@ -1,14 +1,15 @@
 const express = require("express");
 const http = require("http");
 const socketio = require("socket.io");
-const activeRooms = []
+// const activeRooms = []
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server, { pingTimeout: 25000 });
 const users = [];
-const roomNamesFromSockets = []
+const roomNamesFromSockets = [];
 // message template: User, message and time-stamp
 const messageTemplate = require("./forms/message.template");
+
 
 // Utilities for users and rooms
 // const {
@@ -23,33 +24,33 @@ app.use(express.static("public"));
 
 io.on("connection", (socket) => {
   console.log("connected - ", socket.id);
-  console.log('I connection:', roomNamesFromSockets)
+  console.log("I connection:", roomNamesFromSockets);
 
-  socket.on("activeRooms", (data) => {
-    console.log('Från activeRooms array', data);
-    activeRooms.push(data)
-    socket.emit('displayRooms', activeRooms)
-  });
- 
+  // socket.on("activeRooms", (data) => {
+  //   console.log('Från activeRooms array', data);
+  //   activeRooms.push(data)
+  //   socket.emit('displayRooms', roomNamesFromSockets)
+  // });
+
+  socket.emit("activeRooms", roomNamesFromSockets);
+
   /////////////////////////////// Join room börjar ///////////////////////////////////////////////
   socket.on("joinRoom", ({ username, room }) => {
+    room = room || "lobby";
     const user = joiningUser(socket.id, username, room);
-    console.log("join-room says hey");
     socket.join(user.room);
-    const socketRoomsSetValues = socket.rooms.values();
-    const roomNameValueFromSet =
-      (socketRoomsSetValues.next().value, socketRoomsSetValues.next().value);
-    // console.log(socketRoomsSetValues.next().value); // loggar ut socket.id
-    // console.log(socketRoomsSetValues.next().value); // loggar ut roomname
-    console.log(
-      "Current room name is:",
-      roomNameValueFromSet,
-      "and socket id is:",
-      socket.id
-    );
-    
-    roomNamesFromSockets.push(roomNameValueFromSet)
-    console.log(roomNamesFromSockets)
+
+    // if sats för dubletter
+    const checkForDuplicateRoomNames = roomNamesFromSockets.includes(room)
+
+    if (checkForDuplicateRoomNames) {
+      console.log('found duplicate')
+    } else {
+      console.log('didnt find duplicate')
+      roomNamesFromSockets.push(room);
+    }
+
+    console.log("rooms", roomNamesFromSockets);
 
     ///////////// welcomes the user logging in ///////////
     socket.emit(
@@ -70,7 +71,6 @@ io.on("connection", (socket) => {
       room: user.room,
       users: usersInRoom(user.room),
     });
-
   });
   //////////////////////////////////////////////// HÄR SLUTAR JOIN ROOM /////////////////////////////////////////////////////////////////
 
@@ -119,7 +119,6 @@ io.on("connection", (socket) => {
       return users.splice(i, 1)[0];
     }
   }
-
 });
 /////////// Visar användare i rummet ////////////
 function usersInRoom(room) {
@@ -130,5 +129,5 @@ function usersInRoom(room) {
 /// connection with server ///////
 const port = 3000;
 server.listen(port, () => {
-  console.log(`Sever is running on port ${port}`);
+  console.log(`Server is running on port ${port}`);
 });

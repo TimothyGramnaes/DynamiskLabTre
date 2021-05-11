@@ -1,41 +1,44 @@
 const createRoomBtn = document.getElementById("create-room-btn");
-const roomDropdown = document.getElementById("chat-room");
 const newRoom = document.getElementById("room-name");
+const option = document.getElementsByTagName('option')
+const statusText = document.getElementById('status-text')
+let optionValuesArray = []
+let createRoom = Boolean;
 
-// const socket = io();
-
-const activeRooms = [];
 
 createRoomBtn.addEventListener("click", () => {
-    const newRoomName = newRoom.value;
 
-    const optionElement = document.createElement("option");
-    roomDropdown.appendChild(optionElement);
-    optionElement.setAttribute("value", newRoomName);
-    optionElement.innerText = newRoomName;
+	// Create an array of the option elements "value" attributes
+	optionValuesArray = Array.from(roomDropdown.options)
+	
+	// Loop through array to check for duplicates
+	optionValuesArray.every(function (optionElement) {
+		let optionValue = optionElement.value
+		
+		// Check if <option value="___"> is same as newRoom.value
+		if (optionValue === newRoom.value) {
+			console.log('The room name', optionValue, 'already exists')
+			statusText.innerText = `A room called ${optionValue} already exists`
+			statusText.style.color = 'red'
+			createRoom = false
+			return false // to break the loop
+		} else {
+			console.log('Option value:', optionValue)
+			statusText.innerText = `The room ${newRoom.value} was added to list`
+			statusText.style.color = 'green'
+			createRoom = true // to create room
+			return true
+		}
+	})
+	
+	if (createRoom) {
+		const newRoomName = newRoom.value;
 
-    // console.log("New room created:", newRoomName);
+		const optionElement = document.createElement("option");
+		roomDropdown.appendChild(optionElement);
+		optionElement.setAttribute("value", newRoomName);
+		optionElement.innerText = newRoomName;
 
-    activeRooms.push(newRoomName);
-    //   showActiveRooms();
-
-    socket.emit("activeRooms", activeRooms);
-    console.log(activeRooms)
-    // return newRoomName;
+		console.log("New room created:", newRoomName);
+	}
 });
-
-//socket.on("")
-
-// function showActiveRooms() {
-//   // const rooms =
-//   // console.log("funkar det?", activeRooms);
-// }
-
-// user joins shat
-// function joiningUser(id, username, room) {
-//   const user = { id, username, room };
-
-//   users.push(user);
-
-//   return user;
-// }
