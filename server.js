@@ -1,7 +1,7 @@
 const express = require("express");
 const http = require("http");
 const socketio = require("socket.io");
-// const activeRooms = []
+
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server, { pingTimeout: 25000 });
@@ -40,12 +40,12 @@ io.on("connection", (socket) => {
     socket.join(user.room);
 
     // if sats för dubletter
-    const checkForDuplicateRoomNames = roomNamesFromSockets.includes('Garaget')
+    const checkForDuplicateRoomNames = roomNamesFromSockets.includes("Garaget");
 
     if (checkForDuplicateRoomNames) {
-      console.log('found duplicate')
+      console.log("found duplicate");
     } else {
-      console.log('didnt find duplicate')
+      console.log("didnt find duplicate");
       roomNamesFromSockets.push(room);
     }
 
