@@ -34,6 +34,14 @@ body {
   color: rgb(51, 51, 51);
 }
 
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2rem 2rem 1.75rem 2rem;
+  width: 20%;
+}
+
 .sidebar .logo {
   font-size: 1.5rem;
 }
@@ -139,18 +147,13 @@ form label {
   border-radius: 8px;
 }
 
-.sidebar {
-  background: aliceblue;
-  padding: 2rem;
-  width: 20%;
-}
-
 .chat-container {
-  background: lightgoldenrodyellow;
-  padding: 2rem;
   overflow-y: scroll;
   max-height: 90vh;
-  width: 80%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 }
 
 ::-webkit-scrollbar {
@@ -170,16 +173,138 @@ form label {
 
 .chat-view-container {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   width: 100%;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  max-width: 1200px;
+  margin: 0rem 2rem;
+  height: 75vh;
+}
+
+.room {
+  display: flex;
+  flex-direction: row;
+}
+
+.room img {
+  color: rgba(120, 125, 180, 0.5);
+  margin-right: 0.5rem;
+  opacity: 0.75;
+}
+
+.room-name {
+  font-size: 1.34rem;
+  font-weight: 600;
+}
+
+.leave {
+  background: linear-gradient(
+    to right bottom,
+    rgba(120, 125, 180, 0.4),
+    rgba(120, 125, 180, 1)
+  );
+  border: none;
+  padding: 0.7rem 1rem;
+  font-family: "Poppins", sans-serif;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: white;
+  border-radius: 0.7rem;
+  cursor: pointer;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+li {
+  background: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0.4),
+    rgba(255, 255, 255, 0.1)
+  );
+  height: 1.5rem;
+  padding: 0.7rem 1rem 0.7rem 1rem;
+  border-radius: 0.4rem;
+}
+
+li i {
+  margin-right: 1rem;
+  color: rgba(120, 125, 180, 0.7);
 }
 
 .user-message {
-  border: 1px solid black;
-  margin-bottom: 1rem;
-  padding: 1rem;
+  margin: 1rem;
+  max-width: 30rem;
+  padding: 1.5rem 1rem;
+  border-radius: 12px;
 }
 
+.message-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.message-header .time {
+  margin-right: 1rem;
+  color: grey;
+}
+
+.message-header h5,
+.message-header .time {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.message-header h5 {
+  font-size: 1rem;
+}
+
+.message-body {
+  margin-bottom: 0;
+  font-size: 0.9rem;
+}
+
+#message-form {
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  border-radius: 10px;
+  margin-bottom: 0.7rem;
+  margin-top: 0.7rem;
+}
+
+#messagewritten {
+  width: 100%;
+}
+
+.send-message-btn {
+  border: none;
+  padding: 0rem 2rem;
+  font-family: "Poppins", sans-serif;
+  text-transform: uppercase;
+  background: rgb(89, 184, 89);
+
+  background: linear-gradient(
+    to right bottom,
+    rgb(89, 184, 89, 0.6),
+    rgb(89, 184, 89, 1)
+  );
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: white;
+}
+
+input:focus {
+  outline: none;
+}
 .fixedLoginForm {
   display: flex;
   flex-direction: column;
@@ -198,4 +323,15 @@ form label {
   font-weight: 600;
   font-size: 0.8rem;
   line-height: 0.8rem;
+}
+
+.text-input {
+  padding: 1rem;
+}
+
+.flex-container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: space-between;
 }
