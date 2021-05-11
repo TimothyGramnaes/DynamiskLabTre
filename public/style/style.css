@@ -180,9 +180,61 @@ form label {
 }
 
 .user-message {
-  border: 1px solid black;
-  margin-bottom: 1rem;
-  padding: 1rem;
+  margin: 1rem;
+  padding: 1.5rem 1rem;
+  border-radius: 12px;
+}
+
+.message-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.message-header .time {
+  margin-right: 1rem;
+  color: grey;
+}
+
+.message-header h5, .message-header .time {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.message-header h5 {
+  font-size: 1rem;
+}
+
+.message-body {
+  margin-bottom: 0;
+  font-size: .9rem;
+}
+
+#message-form {
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+#messagewritten {
+  width: 100%;
+}
+
+.send-message-btn {
+  border: none;
+  padding: 0rem 2rem;
+  font-family: 'Poppins', sans-serif;
+  text-transform: uppercase;
+  background: rgb(89, 184, 89);
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: white;
+}
+
+input:focus {
+  outline: none
 }
 
 .fixedLoginForm {
@@ -207,4 +259,10 @@ form label {
 
 .text-input {
   padding: 1rem;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }

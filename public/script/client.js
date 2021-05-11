@@ -46,6 +46,7 @@ socket.on("connect", () => {
 socket.on("message", function (message) {
   const div = document.createElement("div");
   div.classList.add("user-message");
+  div.classList.add("glass-design-card");
   div.innerHTML = `<div class="message-header">
       <h5>${message.username}</h5>
       <p class="time">${message.time}</p>
