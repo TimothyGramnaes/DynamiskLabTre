@@ -3,13 +3,9 @@ const shatContainer = document.querySelector(".chat-container");
 const loginForm = document.getElementById("login-form");
 const submitButton = document.getElementById("submit_button");
 const leaveRoomBtn = document.getElementById("leave-room");
-// Room element for startpage
 const roomDropdown = document.getElementById("chat-room");
-
-// const roomName = document.querySelector(".room-name");
 const roomName = document.getElementById("output-room-name");
 const userList = document.getElementById("users");
-//const users = [];
 
 const socket = io("http://localhost:3000");
 
@@ -72,11 +68,8 @@ shatForm.addEventListener("submit", (e) => {
   e.target.elements.messagewritten.focus();
 });
 
+//////////// LEAVE SHAT ROOM ///////////
 leaveRoomBtn.addEventListener("click", (e) => {
-  // e.preventDefault();
-
-  // document.getElementById("loginForm").style.display = "flex";
-  // document.getElementById("toggle-chat").classList.toggle("hidden");
   location.reload();
 });
 /////////////////////////////////////////////////////////// ON CONNECT SLUTAR /////////////////////////////////////////////////

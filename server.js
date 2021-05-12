@@ -1,22 +1,15 @@
 const express = require("express");
 const http = require("http");
 const socketio = require("socket.io");
-// const activeRooms = []
+
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server, { pingTimeout: 25000 });
 const users = [];
 const roomNamesFromSockets = [];
+
 // message template: User, message and time-stamp
 const messageTemplate = require("./forms/message.template");
-
-// Utilities for users and rooms
-// const {
-//   joiningUser,
-//   addCurrentUser,
-//   leavingUser,
-//   usersInRoom,
-// } = require("./forms/users");
 
 //////////////////////////// set static folder /////////////////////////
 app.use(express.static("public"));
@@ -24,13 +17,6 @@ app.use(express.static("public"));
 io.on("connection", (socket) => {
   console.log("connected - ", socket.id);
   console.log("I connection:", roomNamesFromSockets);
-
-  // socket.on("activeRooms", (data) => {
-  //   console.log('Från activeRooms array', data);
-  //   activeRooms.push(data)
-  //   socket.emit('displayRooms', roomNamesFromSockets)
-  // });
-
   socket.emit("activeRooms", roomNamesFromSockets);
 
   /////////////////////////////// Join room börjar ///////////////////////////////////////////////
@@ -77,8 +63,6 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("disconnect - ", socket.id);
 
-    // io.sockets.in(room).leave(room);
-
     const user = leavingUser(socket.id);
     if (user) {
       io.to(user.room).emit(
@@ -93,17 +77,22 @@ io.on("connection", (socket) => {
       });
     }
 
-    let rummet = user.room;
-
-    console.log("Användare kvar i", user.room, ":", users.length);
+    //////////// TAR BORT RUMMET NÄR SISTA ANVÄNDAREN I RUMMET LÄMNAR /////////
+    console.log("Användare kvar i rummet: ", users.length);
     if (users.length === 0) {
-      // loopa genom roomNamesFromSocket för att ta bort
-      // user.room
+      // loopa genom roomNamesFromSocket för att ta bort user.room (funkar inte alla fönster stängs)
       console.log("Nu var det tomt!");
-      roomNamesFromSockets.splice(rummet);
+      // roomNamesFromSockets.splice(user.room);
+      // io.sockets.in(user.room).leave(user.room);
+      updateRooms();
     }
-    //io.sockets.in(user.room).leave();
   });
+
+  function updateRooms() {
+    // uppdatera listan rum.
+    // roomNamesFromSockets uppdateras, rum utan användare visas inte.
+    roomNamesFromSockets.splice();
+  }
   /////////////////////////////////////////////  HÄR SLUTAR DISCONNECT ////////////////////////////////
 
   /////////// Recieve messages from front-end /////////
@@ -130,7 +119,6 @@ io.on("connection", (socket) => {
     if (i !== -1) {
       return users.splice(i, 1)[0];
     }
-    // console.log("Users left in shat: ", users.length);
   }
 });
 /////////// Visar användare i rummet ////////////
