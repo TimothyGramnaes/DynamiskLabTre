@@ -6,7 +6,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server, { pingTimeout: 25000 });
 const users = [];
-const roomNamesFromSockets = [];
+// const roomNamesFromSockets = [];
 
 // message template: User, message and time-stamp
 const messageTemplate = require("./forms/message.template");
@@ -16,8 +16,8 @@ app.use(express.static("public"));
 
 io.on("connection", (socket) => {
   console.log("connected - ", socket.id);
-  console.log("I connection:", roomNamesFromSockets);
-  socket.emit("activeRooms", roomNamesFromSockets);
+  console.log("I connection:", allRooms());
+  socket.emit("activeRooms", allRooms());
 
   /////////////////////////////// Join room börjar ///////////////////////////////////////////////
   socket.on("joinRoom", ({ username, room }) => {
@@ -26,16 +26,16 @@ io.on("connection", (socket) => {
     socket.join(user.room);
 
     // if sats för dubletter
-    const checkForDuplicateRoomNames = roomNamesFromSockets.includes(room);
+    // const checkForDuplicateRoomNames = roomNamesFromSockets.includes(room);
 
-    if (checkForDuplicateRoomNames) {
-      console.log("found duplicate");
-    } else {
-      console.log("didnt find duplicate");
-      roomNamesFromSockets.push(room);
-    }
+    // if (checkForDuplicateRoomNames) {
+    //   console.log("found duplicate");
+    // } else {
+    //   console.log("didnt find duplicate");
+    //   roomNamesFromSockets.push(room);
+    // }
 
-    console.log("rooms", roomNamesFromSockets);
+    // console.log("rooms", roomNamesFromSockets);
 
     ///////////// welcomes the user logging in ///////////
     socket.emit(
@@ -59,7 +59,7 @@ io.on("connection", (socket) => {
   });
   //////////////////////////////////////////////// HÄR SLUTAR JOIN ROOM /////////////////////////////////////////////////////////////////
 
-  ///////////// Shows when a user leaves///////////
+  ///////////// Shows when a user leaves ///////////
   socket.on("disconnect", () => {
     console.log("disconnect - ", socket.id);
 
@@ -75,24 +75,24 @@ io.on("connection", (socket) => {
         room: user.room,
         users: usersInRoom(user.room),
       });
-    }
 
-    //////////// TAR BORT RUMMET NÄR SISTA ANVÄNDAREN I RUMMET LÄMNAR /////////
-    console.log("Användare kvar i rummet: ", users.length);
-    if (users.length === 0) {
-      // loopa genom roomNamesFromSocket för att ta bort user.room (funkar inte alla fönster stängs)
-      console.log("Nu var det tomt!");
-      // roomNamesFromSockets.splice(user.room);
-      // io.sockets.in(user.room).leave(user.room);
-      updateRooms();
+      // //////////// TAR BORT RUMMET NÄR SISTA ANVÄNDAREN I RUMMET LÄMNAR /////////
+      // if (usersInRoom(user.room).length === 0) {
+      //   // loopa genom roomNamesFromSocket för att ta bort user.room (funkar inte alla fönster stängs)
+      //   console.log("Nu var det tomt!");
+      //   const index = roomNamesFromSockets.indexOf(user.room);
+      //   roomNamesFromSockets.splice(index, 1);
+      //   // io.sockets.in(user.room).leave(user.room);
+      //   //  updateRooms();
+      // }
     }
   });
 
-  function updateRooms() {
-    // uppdatera listan rum.
-    // roomNamesFromSockets uppdateras, rum utan användare visas inte.
-    roomNamesFromSockets.splice();
-  }
+  // function updateRooms() {
+  // uppdatera listan rum.
+  // roomNamesFromSockets uppdateras, rum utan användare visas inte.
+  // roomNamesFromSockets.splice();
+  //
   /////////////////////////////////////////////  HÄR SLUTAR DISCONNECT ////////////////////////////////
 
   /////////// Recieve messages from front-end /////////
@@ -124,6 +124,11 @@ io.on("connection", (socket) => {
 /////////// Visar användare i rummet ////////////
 function usersInRoom(room) {
   return users.filter((user) => user.room === room);
+}
+
+function allRooms() {
+  const allRoomsIncDuplicates = users.map((user) => user.room);
+  return [...new Set(allRoomsIncDuplicates)]; // removes duplicates
 }
 ///////////////////////////////////////////////// HÄR SLUTAR CONNECTION ///////////////////////////////////////////////////////
 
