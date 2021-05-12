@@ -5,6 +5,24 @@
 }
 
 /* BYT TILL MOBILE VIEW HÄR */
-@media(max-width: 750px) {
+@media(max-width: 850px) {
+  .logo {
+    text-align: center;
+  }
 
+  #users li i {
+    display: none;
+  }
+
+  #users li {
+    padding: .5 .75 .5 .75;
+  }
+
+  .room img {
+    display: none;
+  }
+
+  /* Byta ut sidebar mot header? */
+  /* ...eller dölja sidebar som kan visas med klick på meny-ikon? */
+  /* Messages tar upp hela bredden */
 }
