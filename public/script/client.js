@@ -6,6 +6,10 @@ const leaveRoomBtn = document.getElementById("leave-room");
 const roomDropdown = document.getElementById("chat-room");
 const roomName = document.getElementById("output-room-name");
 const userList = document.getElementById("users");
+const typingMessageText = document.getElementById('typing-message')
+const messageInput = document.getElementById('messagewritten')
+
+let currentUser = ''
 
 const socket = io("http://localhost:3000");
 
@@ -27,6 +31,7 @@ socket.on("connect", () => {
   loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const userName = e.target.elements.username.value;
+    currentUser = userName;
     // const roomName = e.target.elements.roomname.value;
     const roomName = roomDropdown.value;
 
@@ -53,7 +58,7 @@ socket.on("message", function (message) {
   document.querySelector(".chat").appendChild(div);
   // scroll down upon writing messages
   shatContainer.scrollTo(0, document.body.scrollHeight);
-  //console.log(roomName);
+  typingMessageText.innerHTML = '';
 });
 
 ///////////////////// Tar emot data från chat-formet ///////////////
@@ -68,10 +73,16 @@ shatForm.addEventListener("submit", (e) => {
   e.target.elements.messagewritten.focus();
 });
 
+// Listen for typing
+shatForm.addEventListener('keypress', () => {
+  socket.emit('typing', currentUser)
+})
+
 //////////// LEAVE SHAT ROOM ///////////
 leaveRoomBtn.addEventListener("click", (e) => {
   location.reload();
 });
+
 /////////////////////////////////////////////////////////// ON CONNECT SLUTAR /////////////////////////////////////////////////
 
 /////////// Recieved messages from the server for render
@@ -81,6 +92,10 @@ socket.on("usersInRoom", ({ room, users }) => {
   showRoomName(room);
   showUsers(users);
 });
+
+socket.on('typing', (data) => {
+  typingMessageText.innerHTML = `<p><em> ${data} is typing...`
+})
 
 ///////////////////////////////////// Show roomname /////////////////////////////////////
 function showRoomName(room) {

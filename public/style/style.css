@@ -252,6 +252,12 @@ li i {
   color: rgba(120, 125, 180, 0.7);
 }
 
+.user-is-typing p {
+  color: rgb(204, 204, 204);
+  margin-left: 1rem;
+  font-size: .9rem;
+}
+
 .user-message {
   margin: 1rem;
   max-width: 30rem;

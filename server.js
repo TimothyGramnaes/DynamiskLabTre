@@ -101,6 +101,10 @@ io.on("connection", (socket) => {
     io.to(user.room).emit("message", messageTemplate(user.username, shatMsg));
   });
 
+  socket.on('typing', (data) => {
+    socket.broadcast.emit('typing', data)
+  })
+
   /////////// FUNKTIONER FRÅN USER.JS //////////////////////
   //////////// Skapar en user och pushar till users ///////
   function joiningUser(id, username, room) {
