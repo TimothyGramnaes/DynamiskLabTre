@@ -92,12 +92,15 @@ io.on("connection", (socket) => {
         users: usersInRoom(user.room),
       });
     }
-    console.log("Användare kvar i rummet: ", users.length);
+
+    let rummet = user.room;
+
+    console.log("Användare kvar i", user.room, ":", users.length);
     if (users.length === 0) {
       // loopa genom roomNamesFromSocket för att ta bort
       // user.room
       console.log("Nu var det tomt!");
-      roomNamesFromSockets.splice(user.room);
+      roomNamesFromSockets.splice(rummet);
     }
     //io.sockets.in(user.room).leave();
   });
