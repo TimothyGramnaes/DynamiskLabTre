@@ -102,7 +102,8 @@ io.on("connection", (socket) => {
   });
 
   socket.on('typing', (data) => {
-    socket.broadcast.emit('typing', data)
+    const user = addCurrentUser(socket.id);
+    socket.broadcast.to(user.room).emit('typing', data)
   })
 
   /////////// FUNKTIONER FRÅN USER.JS //////////////////////
