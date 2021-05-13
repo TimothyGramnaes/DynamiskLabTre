@@ -6,7 +6,6 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server, { pingTimeout: 25000 });
 const users = [];
-// const roomNamesFromSockets = [];
 
 // message template: User, message and time-stamp
 const messageTemplate = require("./forms/message.template");
@@ -15,27 +14,22 @@ const messageTemplate = require("./forms/message.template");
 app.use(express.static("public"));
 
 io.on("connection", (socket) => {
-  console.log("connected - ", socket.id);
-  console.log("I connection:", allRooms());
+
+  console.log("New connection - ", socket.id);
   socket.emit("activeRooms", allRooms());
 
   /////////////////////////////// Join room börjar ///////////////////////////////////////////////
   socket.on("joinRoom", ({ username, room }) => {
     room = room || "Lobby";
-    const user = joiningUser(socket.id, username, room);
-    socket.join(user.room);
 
-    // if sats för dubletter
-    // const checkForDuplicateRoomNames = roomNamesFromSockets.includes(room);
-
-    // if (checkForDuplicateRoomNames) {
-    //   console.log("found duplicate");
-    // } else {
-    //   console.log("didnt find duplicate");
-    //   roomNamesFromSockets.push(room);
+    // if (password !== '') {
+    //   console.log('room has password:', password)
     // }
 
-    // console.log("rooms", roomNamesFromSockets);
+    const user = joiningUser(socket.id, username, room);
+    socket.join(user.room);
+    console.log('user.room:', user.room)
+    console.log('username:', username, ', room:', room)
 
     ///////////// welcomes the user logging in ///////////
     socket.emit(
@@ -59,6 +53,8 @@ io.on("connection", (socket) => {
   });
   //////////////////////////////////////////////// HÄR SLUTAR JOIN ROOM /////////////////////////////////////////////////////////////////
 
+
+
   ///////////// Shows when a user leaves ///////////
   socket.on("disconnect", () => {
     console.log("disconnect - ", socket.id);
@@ -76,40 +72,33 @@ io.on("connection", (socket) => {
         users: usersInRoom(user.room),
       });
 
-      // //////////// TAR BORT RUMMET NÄR SISTA ANVÄNDAREN I RUMMET LÄMNAR /////////
-      // if (usersInRoom(user.room).length === 0) {
-      //   // loopa genom roomNamesFromSocket för att ta bort user.room (funkar inte alla fönster stängs)
-      //   console.log("Nu var det tomt!");
-      //   const index = roomNamesFromSockets.indexOf(user.room);
-      //   roomNamesFromSockets.splice(index, 1);
-      //   // io.sockets.in(user.room).leave(user.room);
-      //   //  updateRooms();
-      // }
     }
   });
-
-  // function updateRooms() {
-  // uppdatera listan rum.
-  // roomNamesFromSockets uppdateras, rum utan användare visas inte.
-  // roomNamesFromSockets.splice();
-  //
   /////////////////////////////////////////////  HÄR SLUTAR DISCONNECT ////////////////////////////////
+
+
 
   /////////// Recieve messages from front-end /////////
   socket.on("shatMessage", (shatMsg) => {
     const user = addCurrentUser(socket.id);
+    console.log('från shatMessage socket:', user.room)
     io.to(user.room).emit("message", messageTemplate(user.username, shatMsg));
   });
 
+  // Show 'User is typing...' text feature
   socket.on('typing', (data) => {
     const user = addCurrentUser(socket.id);
     socket.broadcast.to(user.room).emit('typing', data)
   })
 
+
+
   /////////// FUNKTIONER FRÅN USER.JS //////////////////////
   //////////// Skapar en user och pushar till users ///////
   function joiningUser(id, username, room) {
+    // room = room.name
     const user = { id, username, room };
+    console.log('från joiningUser funktionen:', 'room är:', room, 'user är:', user)
     users.push(user);
     return user;
   }
