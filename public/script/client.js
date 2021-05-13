@@ -57,7 +57,9 @@ socket.on("connect", () => {
     
     console.log('Current Room is:', roomName, 'and the password is:', roomObject.password)
 
-    socket.emit("joinRoom", { username: userName, room: roomName });
+    socket.emit('verifyPassword', { room: roomObject })
+    socket.emit("joinRoom", { username: userName, room: roomObject });
+    
     document.getElementById("loginForm").style.display = "none";
     document.getElementById("toggle-chat").classList.toggle("hidden");
   });
