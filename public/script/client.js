@@ -8,6 +8,12 @@ const roomName = document.getElementById("output-room-name");
 const userList = document.getElementById("users");
 const typingMessageText = document.getElementById('typing-message')
 const messageInput = document.getElementById('messagewritten')
+const menuIcon = document.getElementById('menu-icon')
+const sidebar = document.querySelector('.sidebar')
+const textInput = document.querySelector('.text-input')
+const logo = document.querySelector('.header-logo')
+const chatViewContainer = document.querySelector('.chat-view-container')
+const header = document.querySelector('header')
 
 let currentUser = ''
 
@@ -72,6 +78,16 @@ shatForm.addEventListener("submit", (e) => {
   e.target.elements.messagewritten.value = "";
   e.target.elements.messagewritten.focus();
 });
+
+menuIcon.addEventListener('click', () => {
+  
+  sidebar.classList.toggle('hidden')
+  header.classList.toggle('hidden')
+  sidebar.classList.toggle('sidebar-mobile')
+  sidebar.classList.toggle('white')
+  logo.classList.toggle('hidden')
+  // chatViewContainer.classList.toggle('flex-row')
+})
 
 // Listen for typing
 shatForm.addEventListener('keypress', () => {

@@ -342,6 +342,10 @@ input:focus {
   margin-bottom: 2rem;
 }
 
+header {
+  display: none;
+}
+
 #status-text {
   text-align: center;
   font-weight: 600;
@@ -351,7 +355,7 @@ input:focus {
 
 .text-input {
   padding: 1rem;
-  position: relative;
+  /* position: relative; */
 }
 
 .flex-container {
@@ -359,4 +363,28 @@ input:focus {
   width: 100%;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.sidebar-mobile {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 20%;
+  z-index: 50;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.white {
+  background: rgb(238, 238, 238);
+}
+
+#menu-icon {
+  position: fixed;
+  top: 1rem;
+  left: 1.5rem;
+  z-index: 100;
 }

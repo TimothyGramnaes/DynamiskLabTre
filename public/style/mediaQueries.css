@@ -22,6 +22,40 @@
     display: none;
   }
 
+  .chat-view-container {
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;  
+    padding: 0rem 3rem;
+    height: 3rem;
+    position: relative;
+  }
+
+  /* .sidebar {
+    display: none;
+  } */
+
+  header .logo {
+    margin: 0;
+    position: absolute;
+    top: .8rem;
+    left: 46%;
+  }
+
+  .leave {
+    background: transparent;
+    color: black;
+    letter-spacing: 0px;
+    position: fixed;
+    top: .25rem;
+    right: 3rem;
+  }
+
   /* Byta ut sidebar mot header? */
   /* ...eller dölja sidebar som kan visas med klick på meny-ikon? */
   /* Messages tar upp hela bredden */
