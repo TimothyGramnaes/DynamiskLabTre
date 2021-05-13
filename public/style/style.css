@@ -252,6 +252,15 @@ li i {
   color: rgba(120, 125, 180, 0.7);
 }
 
+.user-is-typing p {
+  color: rgb(55, 55, 55);
+  margin-left: 1.25rem;
+  font-size: .75rem;
+  position: absolute;
+  top: -6px;
+  left: 0;
+}
+
 .user-message {
   margin: 1rem;
   max-width: 30rem;
@@ -314,6 +323,7 @@ li i {
   font-weight: 600;
   letter-spacing: 1px;
   color: white;
+  cursor: pointer;
 }
 
 input:focus {
@@ -341,6 +351,7 @@ input:focus {
 
 .text-input {
   padding: 1rem;
+  position: relative;
 }
 
 .flex-container {

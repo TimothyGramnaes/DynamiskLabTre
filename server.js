@@ -101,6 +101,11 @@ io.on("connection", (socket) => {
     io.to(user.room).emit("message", messageTemplate(user.username, shatMsg));
   });
 
+  socket.on('typing', (data) => {
+    const user = addCurrentUser(socket.id);
+    socket.broadcast.to(user.room).emit('typing', data)
+  })
+
   /////////// FUNKTIONER FRÅN USER.JS //////////////////////
   //////////// Skapar en user och pushar till users ///////
   function joiningUser(id, username, room) {
