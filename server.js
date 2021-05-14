@@ -18,15 +18,16 @@ io.on("connection", (socket) => {
   console.log("New connection - ", socket.id);
   socket.emit("activeRooms", allRooms());
 
-  // Verify password
-  socket.on('verifyPassword', ({ room }) => {
-    console.log('=========== from verifyPassword:', room.password)
-  })
-
   /////////////////////////////// Join room börjar ///////////////////////////////////////////////
   socket.on("joinRoom", ({ username, room }) => {
     room = room || "Lobby";
     const user = joiningUser(socket.id, username, room); // byt till room.name
+
+    console.log('room:', room)
+    if (room.name.includes('Privat')) {
+      console.log('========================= INCLUDES PRIVAT')
+      socket.emit('enterPassword')
+    }
 
     socket.join(user.room.name);
 
