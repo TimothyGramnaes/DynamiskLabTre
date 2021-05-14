@@ -18,20 +18,21 @@ io.on("connection", (socket) => {
   console.log("New connection - ", socket.id);
   socket.emit("activeRooms", allRooms());
 
-  // Verify password
-  socket.on('verifyPassword', ({ room }) => {
-    console.log('=========== from verifyPassword:', room.password)
-  })
-
   /////////////////////////////// Join room börjar ///////////////////////////////////////////////
   socket.on("joinRoom", ({ username, room }) => {
     room = room || "Lobby";
     const user = joiningUser(socket.id, username, room); // byt till room.name
 
+    console.log(room)
+    // här innan join görs validation
+    if (room.isPrivate) {
+      console.log('KRÄV LÖSEN')
+    }
+    // if new password input.value = room.password = join, annars joina inte
     socket.join(user.room.name);
 
-    console.log('user.room.name:', user.room.name)
-    console.log('username:', username, ', room:', room)
+    // console.log('user.room.name:', user.room.name)
+    // console.log('username:', username, ', room:', room)
 
     ///////////// welcomes the user logging in ///////////
     socket.emit(
