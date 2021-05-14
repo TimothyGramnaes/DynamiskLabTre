@@ -17,18 +17,13 @@ const socket = io("http://localhost:3000");
 ////////////////////////////////////////////////// ON CONNECT BÖRJAR /////////////////////////////////////////////////////////////////
 socket.on("connect", () => {
 
-  console.log("Du är connectad!");
-
   socket.on("activeRooms", (data) => {
 
     data.forEach((room) => {
-      console.log('************', room)
       const option = document.createElement("option");
       if (room.isPrivate) {
-        console.log('from forEach: room', room.name, 'is private, and password is:', room.password)
         option.innerText = room.name;
       } else {
-        console.log('from forEach: room', room.name, 'is NOT private')
         option.innerText = room.name
       }
       option.setAttribute("value", room.name);
@@ -60,8 +55,6 @@ socket.on("connect", () => {
       }
     }
 
-    
-    console.log('Current Room Name is:', roomObject.name, 'and the password is:', roomObject.password)
     socket.on('enterPassword', function() {
       prompt('To access the chat room, please enter password for the selected room')
     })
@@ -151,5 +144,3 @@ function showUsers(users) {
 function channelIsEmpty(users) {
   return document.getElementById(users).innerHTML.trim() == "";
 }
-// If true there is users in channel
-// console.log(channelIsEmpty("users"));
