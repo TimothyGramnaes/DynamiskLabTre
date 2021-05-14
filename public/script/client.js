@@ -8,7 +8,6 @@ const roomName = document.getElementById("output-room-name");
 const userList = document.getElementById("users");
 const typingMessageText = document.getElementById('typing-message')
 const messageInput = document.getElementById('messagewritten')
-// const roomNameInput = document.getElementById('room-name')
 
 let currentUser = ''
 let isPrivate = Boolean;
@@ -27,7 +26,7 @@ socket.on("connect", () => {
       const option = document.createElement("option");
       if (room.isPrivate) {
         console.log('from forEach: room', room.name, 'is private, and password is:', room.password)
-        option.innerText = room.name + ' - Privat';
+        option.innerText = room.name;
       } else {
         console.log('from forEach: room', room.name, 'is NOT private')
         option.innerText = room.name
@@ -63,7 +62,9 @@ socket.on("connect", () => {
 
     
     console.log('Current Room Name is:', roomObject.name, 'and the password is:', roomObject.password)
-
+    socket.on('enterPassword', function() {
+      prompt('To access the chat room, please enter password for the selected room')
+    })
     socket.emit("joinRoom", { username: userName, room: roomObject });
     
     document.getElementById("loginForm").style.display = "none";
