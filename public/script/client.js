@@ -8,7 +8,6 @@ const roomName = document.getElementById("output-room-name");
 const userList = document.getElementById("users");
 const typingMessageText = document.getElementById('typing-message')
 const messageInput = document.getElementById('messagewritten')
-// const roomNameInput = document.getElementById('room-name')
 
 let currentUser = ''
 let isPrivate = Boolean;
