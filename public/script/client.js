@@ -23,9 +23,16 @@ socket.on("connect", () => {
   socket.on("activeRooms", (data) => {
 
     data.forEach((room) => {
+      console.log('************', room)
       const option = document.createElement("option");
-      option.innerText = room;
-      option.setAttribute("value", room);
+      if (room.isPrivate) {
+        console.log('from forEach: room', room.name, 'is private, and password is:', room.password)
+        option.innerText = room.name + ' - Privat';
+      } else {
+        console.log('from forEach: room', room.name, 'is NOT private')
+        option.innerText = room.name
+      }
+      option.setAttribute("value", room.name);
       roomDropdown.appendChild(option);
     });
   });
@@ -55,9 +62,8 @@ socket.on("connect", () => {
     }
 
     
-    console.log('Current Room is:', roomName, 'and the password is:', roomObject.password)
+    console.log('Current Room Name is:', roomObject.name, 'and the password is:', roomObject.password)
 
-    socket.emit('verifyPassword', { room: roomObject })
     socket.emit("joinRoom", { username: userName, room: roomObject });
     
     document.getElementById("loginForm").style.display = "none";

@@ -26,11 +26,11 @@ io.on("connection", (socket) => {
   /////////////////////////////// Join room börjar ///////////////////////////////////////////////
   socket.on("joinRoom", ({ username, room }) => {
     room = room || "Lobby";
-    const user = joiningUser(socket.id, username, room.name);
+    const user = joiningUser(socket.id, username, room); // byt till room.name
 
-    socket.join(user.room);
+    socket.join(user.room.name);
 
-    console.log('user.room:', user.room)
+    console.log('user.room.name:', user.room.name)
     console.log('username:', username, ', room:', room)
 
     ///////////// welcomes the user logging in ///////////
@@ -41,16 +41,16 @@ io.on("connection", (socket) => {
 
     ///////////// displays message for all other users besides the user joining //////////////
     socket.broadcast
-      .to(user.room)
+      .to(user.room.name)
       .emit(
         "message",
         messageTemplate("ShatApp", `${user.username} shat up the app`)
       );
 
     //////////// Visar alla användare i rummet //////////////////
-    io.to(user.room).emit("usersInRoom", {
-      room: user.room,
-      users: usersInRoom(user.room),
+    io.to(user.room.name).emit("usersInRoom", {
+      room: user.room.name,
+      users: usersInRoom(user.room.name),
     });
   });
   //////////////////////////////////////////////// HÄR SLUTAR JOIN ROOM /////////////////////////////////////////////////////////////////
@@ -63,15 +63,15 @@ io.on("connection", (socket) => {
 
     const user = leavingUser(socket.id);
     if (user) {
-      io.to(user.room).emit(
+      io.to(user.room.name).emit(
         "message",
         messageTemplate("ShatApp", `${user.username} had enough`)
       );
 
       ///////////// Users in rooms ////////////////
-      io.to(user.room).emit("usersInRoom", {
-        room: user.room,
-        users: usersInRoom(user.room),
+      io.to(user.room.name).emit("usersInRoom", {
+        room: user.room.name,
+        users: usersInRoom(user.room.name),
       });
 
     }
@@ -83,14 +83,14 @@ io.on("connection", (socket) => {
   /////////// Recieve messages from front-end /////////
   socket.on("shatMessage", (shatMsg) => {
     const user = addCurrentUser(socket.id);
-    console.log('från shatMessage socket:', user.room)
-    io.to(user.room).emit("message", messageTemplate(user.username, shatMsg));
+    console.log('från shatMessage socket:', user.room.name)
+    io.to(user.room.name).emit("message", messageTemplate(user.username, shatMsg));
   });
 
   // Show 'User is typing...' text feature
   socket.on('typing', (data) => {
     const user = addCurrentUser(socket.id);
-    socket.broadcast.to(user.room).emit('typing', data)
+    socket.broadcast.to(user.room.name).emit('typing', data)
   })
 
 
@@ -119,11 +119,13 @@ io.on("connection", (socket) => {
 });
 /////////// Visar användare i rummet ////////////
 function usersInRoom(room) {
-  return users.filter((user) => user.room === room);
+  return users.filter((user) => user.room.name === room);
 }
 
 function allRooms() {
+  console.log('allRooms() users - ', users)
   const allRoomsIncDuplicates = users.map((user) => user.room);
+  console.log('allRooms() rooms - ', allRoomsIncDuplicates)
   return [...new Set(allRoomsIncDuplicates)]; // removes duplicates
 }
 ///////////////////////////////////////////////// HÄR SLUTAR CONNECTION ///////////////////////////////////////////////////////

@@ -4,7 +4,6 @@ const option = document.getElementsByTagName('option')
 const statusText = document.getElementById('status-text')
 const passwordInput = document.getElementById('room-password')
 let createdRoom = {}
-let temporaryRoomArray = []
 
 let optionValuesArray = []
 let isUnique = Boolean;
@@ -24,30 +23,26 @@ createRoomBtn.addEventListener("click", () => {
 	if (isUnique) {
 		if (isPrivateRoom) {
 			// room object with psw
-			createdRoom = {
-				name: newRoom.value,
-				password: passwordInput.value
-			}
-			console.log('New private room:', createdRoom)
-			temporaryRoomArray.push(createdRoom)
-			console.log(temporaryRoomArray)
+			// createdRoom = {
+			// 	name: newRoom.value,
+			// 	password: passwordInput.value
+			// }
+			// console.log('New private room:', createdRoom)
 
 			const newRoomName = newRoom.value;
 			const optionElement = document.createElement("option");
 			roomDropdown.appendChild(optionElement);
 			optionElement.setAttribute("value", newRoomName);
-			optionElement.innerText = newRoomName + ' (Låst)';
+			optionElement.innerText = newRoomName + ' - Privat';
 		
 			console.log("New room created:", newRoomName);
 
 		} else {
 			// room object without psw
-			const createdRoom = {
-				name: newRoom.value
-			}
-			console.log('New public room:', createdRoom)
-			temporaryRoomArray.push(createdRoom)
-			console.log(temporaryRoomArray)
+			// const createdRoom = {
+			// 	name: newRoom.value
+			// }
+			// console.log('New public room:', createdRoom)
 
 			const newRoomName = newRoom.value;
 			const optionElement = document.createElement("option");
@@ -78,13 +73,7 @@ function roomNameIsUnique() {
 			return false // to break the loop
 		} else {
 			console.log('Option value:', optionValue)
-
-			if (isPrivateRoom) {
-				statusText.innerText = `The private room ${newRoom.value} was added to list`
-			} else {
-				statusText.innerText = `The room ${newRoom.value} was added to list`
-			}
-
+			statusText.innerText = `The room ${newRoom.value} was added to list`
 			statusText.style.color = 'rgba(26, 255, 121, 1)'
 			isUnique = true // to create room
 			return true
