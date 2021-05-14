@@ -23,11 +23,6 @@ createRoomBtn.addEventListener("click", () => {
 	if (isUnique) {
 		if (isPrivateRoom) {
 			// room object with psw
-			// createdRoom = {
-			// 	name: newRoom.value,
-			// 	password: passwordInput.value
-			// }
-			// console.log('New private room:', createdRoom)
 
 			const newRoomName = newRoom.value;
 			const optionElement = document.createElement("option");
@@ -35,14 +30,8 @@ createRoomBtn.addEventListener("click", () => {
 			optionElement.setAttribute("value", newRoomName + ' - Privat');
 			optionElement.innerText = newRoomName + ' - Privat';
 		
-			console.log("New room created:", newRoomName);
-
 		} else {
 			// room object without psw
-			// const createdRoom = {
-			// 	name: newRoom.value
-			// }
-			// console.log('New public room:', createdRoom)
 
 			const newRoomName = newRoom.value;
 			const optionElement = document.createElement("option");
@@ -50,7 +39,6 @@ createRoomBtn.addEventListener("click", () => {
 			optionElement.setAttribute("value", newRoomName);
 			optionElement.innerText = newRoomName;
 		
-			console.log("New room created:", newRoomName);
 		}
 	}
 });
@@ -66,34 +54,15 @@ function roomNameIsUnique() {
 
 		// Check if <option value="___"> is same as newRoom.value
 		if (optionValue === newRoom.value) {
-			console.log('The room name', optionValue, 'already exists')
 			statusText.innerText = `A room called ${optionValue} already exists`
 			statusText.style.color = 'rgba(107, 0, 0, 1)'
 			isUnique = false
 			return false // to break the loop
 		} else {
-			console.log('Option value:', optionValue)
 			statusText.innerText = `The room ${newRoom.value} was added to list`
 			statusText.style.color = 'rgba(26, 255, 121, 1)'
 			isUnique = true // to create room
 			return true
 		}
 	})
-	console.log(optionValuesArray)
 }
-
-
-// function createRoom() {
-// 	const newRoomName = newRoom.value;
-
-// 	const optionElement = document.createElement("option");
-// 	roomDropdown.appendChild(optionElement);
-// 	optionElement.setAttribute("value", newRoomName);
-
-// 	if (isPrivateRoom) {
-// 		optionElement.innerText = newRoomName + ' (Låst)';
-// 	}
-// 	optionElement.innerText = newRoomName;
-
-// 	console.log("New room created:", newRoomName);
-// }

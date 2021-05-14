@@ -15,7 +15,6 @@ app.use(express.static("public"));
 
 io.on("connection", (socket) => {
 
-  console.log("New connection - ", socket.id);
   socket.emit("activeRooms", allRooms());
 
   /////////////////////////////// Join room börjar ///////////////////////////////////////////////
@@ -23,16 +22,11 @@ io.on("connection", (socket) => {
     room = room || "Lobby";
     const user = joiningUser(socket.id, username, room); // byt till room.name
 
-    console.log('room:', room)
     if (room.name.includes('Privat')) {
-      console.log('========================= INCLUDES PRIVAT')
       socket.emit('enterPassword')
     }
 
     socket.join(user.room.name);
-
-    console.log('user.room.name:', user.room.name)
-    console.log('username:', username, ', room:', room)
 
     ///////////// welcomes the user logging in ///////////
     socket.emit(
@@ -60,7 +54,6 @@ io.on("connection", (socket) => {
 
   ///////////// Shows when a user leaves ///////////
   socket.on("disconnect", () => {
-    console.log("disconnect - ", socket.id);
 
     const user = leavingUser(socket.id);
     if (user) {
@@ -84,7 +77,6 @@ io.on("connection", (socket) => {
   /////////// Recieve messages from front-end /////////
   socket.on("shatMessage", (shatMsg) => {
     const user = addCurrentUser(socket.id);
-    console.log('från shatMessage socket:', user.room.name)
     io.to(user.room.name).emit("message", messageTemplate(user.username, shatMsg));
   });
 
@@ -101,7 +93,6 @@ io.on("connection", (socket) => {
   function joiningUser(id, username, room) {
     // room = room.name
     const user = { id, username, room };
-    console.log('från joiningUser funktionen:', 'room är:', room, 'user är:', user)
     users.push(user);
     return user;
   }
@@ -124,9 +115,7 @@ function usersInRoom(room) {
 }
 
 function allRooms() {
-  console.log('allRooms() users - ', users)
   const allRoomsIncDuplicates = users.map((user) => user.room);
-  console.log('allRooms() rooms - ', allRoomsIncDuplicates)
   return [...new Set(allRoomsIncDuplicates)]; // removes duplicates
 }
 ///////////////////////////////////////////////// HÄR SLUTAR CONNECTION ///////////////////////////////////////////////////////
