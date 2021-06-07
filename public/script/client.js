@@ -27,6 +27,7 @@ socket.on("connect", () => {
     });
   });
 
+
   ///////////// Tar emot data ifrån login-form /////////////////
   loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -34,16 +35,24 @@ socket.on("connect", () => {
     currentUser = userName;
     const password = e.target.elements.roomPassword.value
     // const roomName = e.target.elements.roomname.value;
-    const roomName = roomDropdown.value;
-
+    const roomName = roomDropdown.value
     console.log("Connected", socket.id);
     socket.emit("joinRoom", { username: userName, room: roomName, password: password });
-    document.getElementById("loginForm").style.display = "none";
-    document.getElementById("toggle-chat").classList.toggle("hidden");
   });
 });
 
 ////////////////////// Skickar meddelande till HTML /////////////////
+socket.on('successLogin', function (success) {
+  console.log(success);
+  if (success) {
+
+    document.getElementById("loginForm").style.display = "none";
+    document.getElementById("toggle-chat").classList.toggle("hidden");
+    return
+
+  }
+  alert("inlogg misslyckases")
+})
 
 socket.on("message", function (message) {
   const div = document.createElement("div");

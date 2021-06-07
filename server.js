@@ -25,8 +25,15 @@ io.on("connection", (socket) => {
     console.log('nu är vi i jooining room')
     room = room || "Lobby";
     console.log(password)
-    const user = joiningUser(socket.id, username, room, password);
-    socket.join(user.room);
+    const success = joiningUser(socket.id, username, room, password);
+    if (!success) {
+
+
+      socket.emit('successLogin', false);
+
+      return
+    }
+    socket.join(room);
     // console.log(rooms)
 
     // if sats för dubletter
@@ -49,18 +56,23 @@ io.on("connection", (socket) => {
 
     ///////////// displays message for all other users besides the user joining //////////////
     socket.broadcast
-      .to(user.room)
+      .to(room)
       .emit(
         "message",
-        messageTemplate("ShatApp", `${user.username} shat up the app`)
+        messageTemplate("ShatApp", `${username} shat up the app`)
       );
 
     //////////// Visar alla användare i rummet //////////////////
-    io.to(user.room).emit("usersInRoom", {
-      room: user.room,
-      users: usersInRoom(user.room),
+    io.to(room).emit("usersInRoom", {
+      room: room,
+      users: usersInRoom(room),
     });
+
+
+    socket.emit('successLogin', true);
+
   });
+
   //////////////////////////////////////////////// HÄR SLUTAR JOIN ROOM /////////////////////////////////////////////////////////////////
 
   ///////////// Shows when a user leaves ///////////
@@ -113,19 +125,23 @@ io.on("connection", (socket) => {
   /////////// FUNKTIONER FRÅN USER.JS //////////////////////
   //////////// Skapar en user och pushar till users ///////
   function joiningUser(id, username, room, password) {
-    const existingRoom = rooms.find(room => room.roomName == room);
+    const existingRoom = rooms.find(r => r.roomName === room);
+    console.log(rooms)
+    console.log(room)
+    console.log(password)
+    console.log(existingRoom)
     if (existingRoom) {
       if (password != existingRoom.password) {
         console.log("fel lösem")
-        return
+        return false
       }
-      existingRoom.users = [...existingRoom.users, userName]
+      existingRoom.users = [...existingRoom.users, username]
       console.log("vi loggae in på ett rum ")
 
       const user = { id, username, room };
 
       users.push(user);
-      return user
+      return true
     }
 
     console.log("här skapar vi ett rum")
@@ -133,7 +149,7 @@ io.on("connection", (socket) => {
     const user = { id, username, room };
     rooms.push(newRoom)
     users.push(user);
-    return user;
+    return true;
   }
   //////////// Get current user ////////////////
   function addCurrentUser(id) {
