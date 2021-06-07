@@ -6,6 +6,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server, { pingTimeout: 25000 });
 const users = [];
+const rooms = []
 // const roomNamesFromSockets = [];
 
 // message template: User, message and time-stamp
@@ -20,10 +21,13 @@ io.on("connection", (socket) => {
   socket.emit("activeRooms", allRooms());
 
   /////////////////////////////// Join room börjar ///////////////////////////////////////////////
-  socket.on("joinRoom", ({ username, room }) => {
+  socket.on("joinRoom", ({ username, room, password }) => {
+    console.log('nu är vi i jooining room')
     room = room || "Lobby";
-    const user = joiningUser(socket.id, username, room);
+    console.log(password)
+    const user = joiningUser(socket.id, username, room, password);
     socket.join(user.room);
+    // console.log(rooms)
 
     // if sats för dubletter
     // const checkForDuplicateRoomNames = roomNamesFromSockets.includes(room);
@@ -108,8 +112,26 @@ io.on("connection", (socket) => {
 
   /////////// FUNKTIONER FRÅN USER.JS //////////////////////
   //////////// Skapar en user och pushar till users ///////
-  function joiningUser(id, username, room) {
+  function joiningUser(id, username, room, password) {
+    const existingRoom = rooms.find(room => room.roomName == room);
+    if (existingRoom) {
+      if (password != existingRoom.password) {
+        console.log("fel lösem")
+        return
+      }
+      existingRoom.users = [...existingRoom.users, userName]
+      console.log("vi loggae in på ett rum ")
+
+      const user = { id, username, room };
+
+      users.push(user);
+      return user
+    }
+
+    console.log("här skapar vi ett rum")
+    const newRoom = { roomId: id, users: [username], roomName: room, password: password };
     const user = { id, username, room };
+    rooms.push(newRoom)
     users.push(user);
     return user;
   }

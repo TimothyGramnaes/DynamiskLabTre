@@ -32,11 +32,12 @@ socket.on("connect", () => {
     e.preventDefault();
     const userName = e.target.elements.username.value;
     currentUser = userName;
+    const password = e.target.elements.roomPassword.value
     // const roomName = e.target.elements.roomname.value;
     const roomName = roomDropdown.value;
 
     console.log("Connected", socket.id);
-    socket.emit("joinRoom", { username: userName, room: roomName });
+    socket.emit("joinRoom", { username: userName, room: roomName, password: password });
     document.getElementById("loginForm").style.display = "none";
     document.getElementById("toggle-chat").classList.toggle("hidden");
   });
