@@ -10,19 +10,23 @@ const typingMessageText = document.getElementById('typing-message')
 const messageInput = document.getElementById('messagewritten')
 
 let currentUser = ''
+let isPrivate = Boolean;
 
 const socket = io("http://localhost:3000");
 
 ////////////////////////////////////////////////// ON CONNECT BÖRJAR /////////////////////////////////////////////////////////////////
 socket.on("connect", () => {
-  console.log("Du är connectad!");
+
   socket.on("activeRooms", (data) => {
-    console.log(data);
 
     data.forEach((room) => {
       const option = document.createElement("option");
-      option.innerText = room;
-      option.setAttribute("value", room);
+      if (room.isPrivate) {
+        option.innerText = room.name;
+      } else {
+        option.innerText = room.name
+      }
+      option.setAttribute("value", room.name);
       roomDropdown.appendChild(option);
     });
   });
@@ -76,14 +80,16 @@ socket.on("message", function (message) {
 shatForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const shatMsg = e.target.elements.messagewritten.value;
+
   // Send message to be read by the server
   socket.emit("shatMessage", shatMsg);
+
   // Empty and focus the textbox after sending a message
   e.target.elements.messagewritten.value = "";
   e.target.elements.messagewritten.focus();
 });
 
-// Listen for typing
+// Listen for keypress and emit typing msg
 shatForm.addEventListener('keypress', () => {
   socket.emit('typing', currentUser)
 })
@@ -103,6 +109,7 @@ socket.on("usersInRoom", ({ room, users }) => {
   showUsers(users);
 });
 
+// Output 'typing' text
 socket.on('typing', (data) => {
   typingMessageText.innerHTML = `<p><em> ${data} is typing...`
 })
@@ -128,5 +135,3 @@ function showUsers(users) {
 function channelIsEmpty(users) {
   return document.getElementById(users).innerHTML.trim() == "";
 }
-// If true there is users in channel
-console.log(channelIsEmpty("users"));
