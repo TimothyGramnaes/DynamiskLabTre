@@ -16,8 +16,7 @@ const messageTemplate = require("./forms/message.template");
 app.use(express.static("public"));
 
 io.on("connection", (socket) => {
-  console.log("connected - ", socket.id);
-  console.log("I connection:", allRooms());
+
   socket.emit("activeRooms", allRooms());
 
   /////////////////////////////// Join room börjar ///////////////////////////////////////////////
@@ -39,14 +38,11 @@ io.on("connection", (socket) => {
     // if sats för dubletter
     // const checkForDuplicateRoomNames = roomNamesFromSockets.includes(room);
 
-    // if (checkForDuplicateRoomNames) {
-    //   console.log("found duplicate");
-    // } else {
-    //   console.log("didnt find duplicate");
-    //   roomNamesFromSockets.push(room);
-    // }
+    if (room.name.includes('Privat')) {
+      socket.emit('enterPassword')
+    }
 
-    // console.log("rooms", roomNamesFromSockets);
+    socket.join(user.room.name);
 
     ///////////// welcomes the user logging in ///////////
     socket.emit(
@@ -75,52 +71,43 @@ io.on("connection", (socket) => {
 
   //////////////////////////////////////////////// HÄR SLUTAR JOIN ROOM /////////////////////////////////////////////////////////////////
 
+
+
   ///////////// Shows when a user leaves ///////////
   socket.on("disconnect", () => {
-    console.log("disconnect - ", socket.id);
 
     const user = leavingUser(socket.id);
     if (user) {
-      io.to(user.room).emit(
+      io.to(user.room.name).emit(
         "message",
         messageTemplate("ShatApp", `${user.username} had enough`)
       );
 
       ///////////// Users in rooms ////////////////
-      io.to(user.room).emit("usersInRoom", {
-        room: user.room,
-        users: usersInRoom(user.room),
+      io.to(user.room.name).emit("usersInRoom", {
+        room: user.room.name,
+        users: usersInRoom(user.room.name),
       });
 
-      // //////////// TAR BORT RUMMET NÄR SISTA ANVÄNDAREN I RUMMET LÄMNAR /////////
-      // if (usersInRoom(user.room).length === 0) {
-      //   // loopa genom roomNamesFromSocket för att ta bort user.room (funkar inte alla fönster stängs)
-      //   console.log("Nu var det tomt!");
-      //   const index = roomNamesFromSockets.indexOf(user.room);
-      //   roomNamesFromSockets.splice(index, 1);
-      //   // io.sockets.in(user.room).leave(user.room);
-      //   //  updateRooms();
-      // }
     }
   });
-
-  // function updateRooms() {
-  // uppdatera listan rum.
-  // roomNamesFromSockets uppdateras, rum utan användare visas inte.
-  // roomNamesFromSockets.splice();
-  //
   /////////////////////////////////////////////  HÄR SLUTAR DISCONNECT ////////////////////////////////
+
+
 
   /////////// Recieve messages from front-end /////////
   socket.on("shatMessage", (shatMsg) => {
     const user = addCurrentUser(socket.id);
-    io.to(user.room).emit("message", messageTemplate(user.username, shatMsg));
+    io.to(user.room.name).emit("message", messageTemplate(user.username, shatMsg));
   });
 
+  // Show 'User is typing...' text feature
   socket.on('typing', (data) => {
     const user = addCurrentUser(socket.id);
-    socket.broadcast.to(user.room).emit('typing', data)
+    socket.broadcast.to(user.room.name).emit('typing', data)
   })
+
+
 
   /////////// FUNKTIONER FRÅN USER.JS //////////////////////
   //////////// Skapar en user och pushar till users ///////
@@ -166,7 +153,7 @@ io.on("connection", (socket) => {
 });
 /////////// Visar användare i rummet ////////////
 function usersInRoom(room) {
-  return users.filter((user) => user.room === room);
+  return users.filter((user) => user.room.name === room);
 }
 
 function allRooms() {
